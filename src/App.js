@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Navigation } from 'components';
 
@@ -16,10 +17,21 @@ function App() {
           <meta name="description" content="Strona główna aplikacji" />
         </Helmet>
       </HelmetProvider>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <Navigation items={[]} />
-      </ThemeProvider>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <Navigation
+            items={[
+              { content: 'Homepage', to: '/' },
+              { content: 'Budget', to: '/budget' },
+            ]}
+          />
+        </ThemeProvider>
+        <Routes>
+          <Route exact path="/" element="Homepage" />
+          <Route path="/budget" element="Budget page" />
+        </Routes>
+      </Router>
     </>
   );
 }
