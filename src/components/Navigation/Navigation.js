@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { Wrapper } from 'components';
 import { Container, List } from './Navigation.css';
@@ -9,10 +10,10 @@ export function Navigation({ items }) {
     <Container>
       <Wrapper>
         <List>
-          {items.map((item) => {
+          {items.map(({ content, to }) => {
             return (
-              <li key={item.id}>
-                <a href="/">{item.content}</a>
+              <li key={content}>
+                <Link to={to}>{content}</Link>
               </li>
             );
           })}
@@ -23,5 +24,10 @@ export function Navigation({ items }) {
 }
 
 Navigation.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      content: PropTypes.string.isRequired,
+      to: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
