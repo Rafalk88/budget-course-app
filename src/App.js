@@ -1,6 +1,9 @@
-import { Helmet } from "react-helmet";
-import React from "react";
-import "./App.css";
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { ThemeProvider } from 'styled-components';
+import { Navigation } from 'components';
+import theme from 'utils/theme';
+import 'App.css';
 
 function App() {
   return (
@@ -9,9 +12,9 @@ function App() {
         <title>Budget app - main</title>
         <meta name="description" content="Strona główna aplikacji" />
       </Helmet>
-      <header className="App">
-        <div className="App-header">Initialize project</div>
-      </header>
+      <ThemeProvider theme={theme}>
+        <Navigation items={[]} />
+      </ThemeProvider>
     </>
   );
 }
