@@ -7,17 +7,34 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "final-form": "^4.20.10",
+    "i18next": "^23.11.5",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-xhr-backend": "^3.2.2",
+    "json-server": "^1.0.0-beta.1",
+    "lodash": "^4.17.21",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-final-form": "^6.5.9",
     "react-helmet": "^6.1.0",
+    "react-i18next": "^14.1.2",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
+    "react-toastify": "^10.0.5",
+    "redux": "^5.0.1",
+    "styled-components": "^6.1.11",
+    "styled-normalize": "^8.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "db": "json-server --watch db.json --port 3001",
+    "dev": "concurrently \"npm run start\" \"npm run db\""
   },
   "eslintConfig": {
     "extends": [
@@ -36,5 +53,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "redux-devtools-extension": "^2.13.9"
   }
 }
