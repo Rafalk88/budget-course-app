@@ -2,8 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { ThemeProvider } from 'styled-components';
 import { Navigation } from 'components';
+
 import theme from 'utils/theme';
-import 'App.css';
+import { GlobalStyles } from 'index.css.js';
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
         <meta name="description" content="Strona główna aplikacji" />
       </Helmet>
       <ThemeProvider theme={theme}>
-        <Navigation items={[]} />
+        <GlobalStyles>
+          <Navigation items={[]} />
+        </GlobalStyles>
       </ThemeProvider>
     </>
   );
