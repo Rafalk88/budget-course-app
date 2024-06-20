@@ -7,7 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     list-style: none:
     padding: 0;
     li + li {
-      margin-left: ${(theme) => theme.spacing.sx}px;
+      margin-left: ${({ theme }) => theme.spacing.sx}px;
     }
   }
 `;
