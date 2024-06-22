@@ -3,7 +3,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { Navigation } from 'components';
+import { Navigation, Wrapper } from 'components';
 
 import { theme } from 'utils/theme';
 import { GlobalStyles } from 'index.css.js';
@@ -37,10 +37,12 @@ function App() {
             RightElement={<RightElement />}
           />
         </ThemeProvider>
-        <Routes>
-          <Route exact path="/" element="Homepage" />
-          <Route path="/budget" element="Budget page" />
-        </Routes>
+        <Wrapper>
+          <Routes>
+            <Route exact path="/" element="Homepage" />
+            <Route path="/budget" element="Budget page" />
+          </Routes>
+        </Wrapper>
       </Router>
     </>
   );
