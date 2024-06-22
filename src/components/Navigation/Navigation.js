@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Wrapper } from 'components';
 import { Container, List } from './Navigation.css';
 
-export function Navigation({ items }) {
+export function Navigation({ items, RightElement }) {
   return (
     <Container>
       <Wrapper>
@@ -18,6 +18,7 @@ export function Navigation({ items }) {
             );
           })}
         </List>
+        {RightElement}
       </Wrapper>
     </Container>
   );
@@ -30,4 +31,5 @@ Navigation.propTypes = {
       to: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  RightElement: PropTypes.node.isRequired,
 };
