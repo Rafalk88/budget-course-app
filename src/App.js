@@ -8,6 +8,15 @@ import { Navigation } from 'components';
 import { theme } from 'utils/theme';
 import { GlobalStyles } from 'index.css.js';
 
+function RightElement() {
+  return (
+    <div>
+      <button type="button">pl</button>
+      <button type="button">eng</button>
+    </div>
+  );
+}
+
 function App() {
   return (
     <>
@@ -25,6 +34,7 @@ function App() {
               { content: 'Homepage', to: '/' },
               { content: 'Budget', to: '/budget' },
             ]}
+            RightElement={<RightElement />}
           />
         </ThemeProvider>
         <Routes>
