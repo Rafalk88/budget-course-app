@@ -1,13 +1,25 @@
-import React, { Suspense } from 'react';
+/* eslint-disable react/jsx-fragments */
+import React, { Suspense, Fragment } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { Navigation, Wrapper } from 'components';
+import { LoadingIndicator, Navigation, Wrapper } from 'components';
 
 import { theme } from 'utils/theme';
 import { GlobalStyles } from 'index.css.js';
+
+const LoadingWrapper = styled(Wrapper)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -23,7 +35,7 @@ function App() {
   const EN = 'en';
 
   return (
-    <>
+    <Fragment>
       <HelmetProvider>
         <Helmet>
           <title>Budget app - main</title>
@@ -31,33 +43,31 @@ function App() {
         </Helmet>
       </HelmetProvider>
       <Router>
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <Navigation
-            items={[
-              { content: t('Homepage'), to: '/' },
-              { content: t('Budget'), to: '/budget' },
-            ]}
-            RightElement={
-              <div>
-                <button
-                  type="button"
-                  onClick={() => changeLanguage(PL)}
-                  disabled={isActiveLng(PL)}
-                >
-                  pl
-                </button>
-                <button
-                  type="button"
-                  onClick={() => changeLanguage(EN)}
-                  disabled={isActiveLng(EN)}
-                >
-                  eng
-                </button>
-              </div>
-            }
-          />
-        </ThemeProvider>
+        <GlobalStyles />
+        <Navigation
+          items={[
+            { content: t('Homepage'), to: '/' },
+            { content: t('Budget'), to: '/budget' },
+          ]}
+          RightElement={
+            <div>
+              <button
+                type="button"
+                onClick={() => changeLanguage(PL)}
+                disabled={isActiveLng(PL)}
+              >
+                pl
+              </button>
+              <button
+                type="button"
+                onClick={() => changeLanguage(EN)}
+                disabled={isActiveLng(EN)}
+              >
+                eng
+              </button>
+            </div>
+          }
+        />
         <Wrapper>
           <Routes>
             <Route exact path="/" element="Homepage" />
@@ -65,15 +75,23 @@ function App() {
           </Routes>
         </Wrapper>
       </Router>
-    </>
+    </Fragment>
   );
 }
 
 function RootApp() {
   return (
-    <Suspense fallback="Loading...">
-      <App />
-    </Suspense>
+    <ThemeProvider theme={theme}>
+      <Suspense
+        fallback={
+          <LoadingWrapper>
+            <LoadingIndicator />
+          </LoadingWrapper>
+        }
+      >
+        <App />
+      </Suspense>
+    </ThemeProvider>
   );
 }
 

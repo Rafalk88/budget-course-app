@@ -19,5 +19,8 @@ export const theme = {
     pink: {
       normal: 'rgb(219, 112, 147)',
     },
+    black: {
+      normal: 'rgb(0, 0, 0)',
+    },
   },
 };
