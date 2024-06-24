@@ -39,6 +39,7 @@ Button.propTypes = {
   children: PropTypes.node,
 };
 
+//! will be deprecated. Change to default params
 Button.defaultProps = {
   children: undefined,
   to: '',
