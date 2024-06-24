@@ -9,7 +9,7 @@ i18n
     lng: 'en',
     otherLanguages: ['pl'],
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
     saveMissing: true,
     interpolation: {
       escapeValue: false,
