@@ -5,7 +5,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { LoadingIndicator, Navigation, Wrapper } from 'components';
+import { Button, LoadingIndicator, Navigation, Wrapper } from 'components';
 
 import { theme } from 'utils/theme';
 import { GlobalStyles } from 'index.css.js';
@@ -51,20 +51,20 @@ function App() {
           ]}
           RightElement={
             <div>
-              <button
-                type="button"
+              <Button
+                type="inline"
                 onClick={() => changeLanguage(PL)}
                 disabled={isActiveLng(PL)}
               >
                 pl
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                type="inline"
                 onClick={() => changeLanguage(EN)}
                 disabled={isActiveLng(EN)}
               >
                 eng
-              </button>
+              </Button>
             </div>
           }
         />
