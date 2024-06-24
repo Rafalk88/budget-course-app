@@ -9,17 +9,19 @@ import { Navigation, Wrapper } from 'components';
 import { theme } from 'utils/theme';
 import { GlobalStyles } from 'index.css.js';
 
-function RightElement() {
-  return (
-    <div>
-      <button type="button">pl</button>
-      <button type="button">eng</button>
-    </div>
-  );
-}
-
 function App() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+  const isActiveLng = (lng) => {
+    return i18n.language === lng;
+  };
+
+  const PL = 'pl';
+  const EN = 'en';
+
   return (
     <>
       <HelmetProvider>
@@ -36,7 +38,24 @@ function App() {
               { content: t('Homepage'), to: '/' },
               { content: t('Budget'), to: '/budget' },
             ]}
-            RightElement={<RightElement />}
+            RightElement={
+              <div>
+                <button
+                  type="button"
+                  onClick={() => changeLanguage(PL)}
+                  disabled={isActiveLng(PL)}
+                >
+                  pl
+                </button>
+                <button
+                  type="button"
+                  onClick={() => changeLanguage(EN)}
+                  disabled={isActiveLng(EN)}
+                >
+                  eng
+                </button>
+              </div>
+            }
           />
         </ThemeProvider>
         <Wrapper>
