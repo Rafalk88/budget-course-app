@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
+import { Button } from 'components';
 import { Container, NavigationWrapper, List } from './Navigation.css';
 
 export function Navigation({ items, RightElement }) {
@@ -12,7 +12,9 @@ export function Navigation({ items, RightElement }) {
           {items.map(({ content, to }) => {
             return (
               <li key={content}>
-                <Link to={to}>{content}</Link>
+                <Button to={to} variant="inline">
+                  {content}
+                </Button>
               </li>
             );
           })}

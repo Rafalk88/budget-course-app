@@ -52,14 +52,14 @@ function App() {
           RightElement={
             <div>
               <Button
-                type="inline"
+                variant="regular"
                 onClick={() => changeLanguage(PL)}
                 disabled={isActiveLng(PL)}
               >
                 pl
               </Button>
               <Button
-                type="inline"
+                variant="regular"
                 onClick={() => changeLanguage(EN)}
                 disabled={isActiveLng(EN)}
               >
