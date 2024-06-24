@@ -9,9 +9,9 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    defaultLanguage: 'en',
+    defaultLanguage: 'en-gb',
     otherLanguages: ['pl'],
-    fallbackLng: 'en',
+    fallbackLng: 'en-gb',
     debug: true,
     saveMissing: true,
 
@@ -34,6 +34,7 @@ i18n
       },
       parsePayload: (namespace, key) => {
         if (key === '_t') return;
+        console.log(process.env.REACT_APP_POEDITOR_API_TOKEN);
 
         const data = [{ term: key }];
         const payload = {

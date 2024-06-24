@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Navigation, Wrapper } from 'components';
 
@@ -18,6 +19,7 @@ function RightElement() {
 }
 
 function App() {
+  const { t } = useTranslation();
   return (
     <>
       <HelmetProvider>
@@ -31,8 +33,8 @@ function App() {
           <GlobalStyles />
           <Navigation
             items={[
-              { content: 'Homepage', to: '/' },
-              { content: 'Budget', to: '/budget' },
+              { content: t('Homepage'), to: '/' },
+              { content: t('Budget'), to: '/budget' },
             ]}
             RightElement={<RightElement />}
           />
@@ -48,4 +50,12 @@ function App() {
   );
 }
 
-export default App;
+function RootApp() {
+  return (
+    <Suspense fallback="Loading...">
+      <App />
+    </Suspense>
+  );
+}
+
+export default RootApp;
