@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -9,7 +9,7 @@ import { InlineButton, RegularButton } from './Button.css';
 
 export function Button({ variant, children, ...otherProps }) {
   const { to } = otherProps;
-  const Component = (() => {
+  const Component = useMemo(() => {
     switch (variant) {
       case 'inline':
         return InlineButton;
@@ -19,9 +19,12 @@ export function Button({ variant, children, ...otherProps }) {
       default:
         return RegularButton;
     }
-  })();
+  }, [variant]);
 
-  const content = <Component {...otherProps}>{children}</Component>;
+  const content = useMemo(
+    () => <Component {...otherProps}>{children}</Component>,
+    [otherProps, children],
+  );
 
   return to ? (
     <Link {...otherProps}>{content}</Link>
@@ -38,5 +41,5 @@ Button.propTypes = {
 
 Button.defaultProps = {
   children: undefined,
-  to: undefined,
+  to: '',
 };
