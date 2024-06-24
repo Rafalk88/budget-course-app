@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-fragments */
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -19,12 +21,12 @@ export function Button({ variant, children, ...otherProps }) {
     }
   })();
 
+  const content = <Component {...otherProps}>{children}</Component>;
+
   return to ? (
-    <Link {...otherProps}>
-      <Component {...otherProps}>{children}</Component>
-    </Link>
+    <Link {...otherProps}>{content}</Link>
   ) : (
-    <Component {...otherProps}>{children}</Component>
+    <Fragment>{content}</Fragment>
   );
 }
 
