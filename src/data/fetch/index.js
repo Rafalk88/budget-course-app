@@ -1,3 +1,3 @@
-import * as budgetAPI from './budget.fetch';
+import * as budget from './budget.fetch';
 
-export { budgetAPI };
+export { budget };
