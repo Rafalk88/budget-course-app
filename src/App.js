@@ -10,7 +10,7 @@ import {
   fetchBudget,
   fetchBudgetedCategories,
 } from 'data/actions/budget.actions';
-import RootApp from './RootApp';
+import AppContent from './AppContent';
 
 const mapStateToProps = (state) => ({
   budget: state.budget.budget,
@@ -22,7 +22,7 @@ const mapDispatchToProps = {
   fetchBudgetedCategories,
 };
 
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(RootApp);
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(AppContent);
 
 function App() {
   return (

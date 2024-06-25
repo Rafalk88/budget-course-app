@@ -9,7 +9,7 @@ import { Button, Navigation, Wrapper } from 'components';
 import { GlobalStyles } from 'index.css.js';
 
 // eslint-disable-next-line no-unused-vars
-function RootApp({ budget, fetchBudget, fetchBudgetedCategories }) {
+function AppContent({ budget, fetchBudget, fetchBudgetedCategories }) {
   const { t, i18n } = useTranslation();
   const firstRender = useRef(false);
 
@@ -76,9 +76,9 @@ function RootApp({ budget, fetchBudget, fetchBudgetedCategories }) {
   );
 }
 
-export default RootApp;
+export default AppContent;
 
-RootApp.propTypes = {
+AppContent.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   budget: PropTypes.any.isRequired,
   fetchBudget: PropTypes.func.isRequired,
