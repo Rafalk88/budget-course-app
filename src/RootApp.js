@@ -8,8 +8,8 @@ import { Button, Navigation, Wrapper } from 'components';
 
 import { GlobalStyles } from 'index.css.js';
 
-function RootApp({ budget, fetchBudget }) {
-  console.log(budget);
+// eslint-disable-next-line no-unused-vars
+function RootApp({ budget, fetchBudget, fetchBudgetedCategories }) {
   const { t, i18n } = useTranslation();
   const firstRender = useRef(false);
 
@@ -25,6 +25,7 @@ function RootApp({ budget, fetchBudget }) {
   useEffect(() => {
     if (firstRender.current) {
       fetchBudget(1);
+      fetchBudgetedCategories(1);
     } else {
       firstRender.current = true;
     }
@@ -81,4 +82,5 @@ RootApp.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   budget: PropTypes.any.isRequired,
   fetchBudget: PropTypes.func.isRequired,
+  fetchBudgetedCategories: PropTypes.func.isRequired,
 };

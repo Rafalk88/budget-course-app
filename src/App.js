@@ -6,15 +6,20 @@ import { connect } from 'react-redux';
 import { LoadingIndicator } from 'components';
 import { LoadingWrapper } from 'App.css';
 import { theme } from 'utils/theme';
-import { fetchBudget } from 'data/actions/budget.actions';
+import {
+  fetchBudget,
+  fetchBudgetedCategories,
+} from 'data/actions/budget.actions';
 import RootApp from './RootApp';
 
 const mapStateToProps = (state) => ({
   budget: state.budget.budget,
+  budgetedCategories: state.budget.budgetedCategories,
 });
 
 const mapDispatchToProps = {
   fetchBudget,
+  fetchBudgetedCategories,
 };
 
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(RootApp);

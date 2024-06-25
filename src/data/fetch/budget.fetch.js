@@ -8,7 +8,7 @@ export function fetchBudget(id) {
 
 export function fetchBudgetCategories(id) {
   const promise = fetch(
-    `${process.env.REACT_APP_API_URL}/budgets/${id}/budgetCategories`,
+    `${process.env.REACT_APP_API_URL}/budgetCategories?budgetId=${id}`,
   );
 
   return promise;
