@@ -1,4 +1,5 @@
 export * from './budget.constants';
+export * from './common.constants';
 
 // LOADING STAGES
 export const LOADING_STAGES = {
