@@ -10,7 +10,7 @@ export const fetchBudget = (id) => async (dispatch) => {
     type: BUDGET_GET_REQUEST,
   });
   try {
-    const response = await API.budget.fetchBudget(id);
+    const response = await API.fetchBudget(id);
     const data = response.json();
     dispatch({
       type: BUDGET_GET_SUCCESS,
