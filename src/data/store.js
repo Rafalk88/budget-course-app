@@ -4,10 +4,11 @@ import { thunk } from 'redux-thunk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+import { promiseMiddleware } from 'data/middlewares';
 import rootReducer from './reducers';
 
 export default function configureStore(preloadedState) {
-  const middlewares = [thunk];
+  const middlewares = [thunk, promiseMiddleware];
   const middlewareEnhancer = applyMiddleware(...middlewares);
   const enhancers = [middlewareEnhancer];
   const composeEnhancers = composeWithDevTools(...enhancers);
