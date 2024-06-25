@@ -11,7 +11,7 @@ export const fetchBudget = (id) => async (dispatch) => {
   });
   try {
     const response = await API.fetchBudget(id);
-    const data = response.json();
+    const data = await response.json();
     dispatch({
       type: BUDGET_GET_SUCCESS,
       payload: data,
