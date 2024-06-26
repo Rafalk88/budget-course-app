@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,6 @@ import { GlobalStyles } from 'index.css.js';
 // eslint-disable-next-line no-unused-vars
 function AppContent({ budget, fetchBudget, fetchBudgetedCategories }) {
   const { t, i18n } = useTranslation();
-  const firstRender = useRef(false);
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -22,15 +21,6 @@ function AppContent({ budget, fetchBudget, fetchBudgetedCategories }) {
   };
   const PL = 'pl';
   const EN = 'en';
-
-  useEffect(() => {
-    if (firstRender.current) {
-      fetchBudget(1);
-      fetchBudgetedCategories(1);
-    } else {
-      firstRender.current = true;
-    }
-  }, [fetchBudget]);
 
   return (
     <>
@@ -69,7 +59,15 @@ function AppContent({ budget, fetchBudget, fetchBudgetedCategories }) {
         <Wrapper>
           <Routes>
             <Route exact path="/" element="Homepage" />
-            <Route path="/budget" element={<Budget />} />
+            <Route
+              path="/budget"
+              element={
+                <Budget
+                  fetchBudget={fetchBudget}
+                  fetchBudgetedCategories={fetchBudgetedCategories}
+                />
+              }
+            />
           </Routes>
         </Wrapper>
       </Router>
