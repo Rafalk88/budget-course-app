@@ -1,7 +1,9 @@
+/* eslint-disable react/require-default-props */
 import React, { useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { LoadingIndicator } from 'components';
+import { BudgetCategoryList } from './components/BudgetCategoryList';
 import { Grid } from './Budget.css';
 
 export function Budget({
@@ -36,7 +38,9 @@ export function Budget({
 
   return (
     <Grid>
-      <section>{isLoaded ? 'Category list' : <LoadingIndicator />}</section>
+      <section>
+        {isLoaded ? <BudgetCategoryList /> : <LoadingIndicator />}
+      </section>
       <section>{isLoaded ? 'Transaction list' : <LoadingIndicator />}</section>
     </Grid>
   );
@@ -47,6 +51,6 @@ Budget.propTypes = {
   fetchBudget: PropTypes.func.isRequired,
   fetchBudgetedCategories: PropTypes.func.isRequired,
   fetchAllCategories: PropTypes.func.isRequired,
-  budgetState: PropTypes.shape({}).isRequired,
-  commonState: PropTypes.shape({}).isRequired,
+  budgetState: PropTypes.shape({}),
+  commonState: PropTypes.shape({}),
 };

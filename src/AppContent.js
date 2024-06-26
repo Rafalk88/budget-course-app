@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -93,6 +94,6 @@ AppContent.propTypes = {
   fetchBudget: PropTypes.func.isRequired,
   fetchBudgetedCategories: PropTypes.func.isRequired,
   fetchAllCategories: PropTypes.func.isRequired,
-  budgetState: PropTypes.shape({}).isRequired,
-  commonState: PropTypes.shape({}).isRequired,
+  budgetState: PropTypes.shape({}),
+  commonState: PropTypes.shape({}),
 };
