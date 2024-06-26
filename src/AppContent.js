@@ -12,6 +12,8 @@ import { GlobalStyles } from 'index.css.js';
 // eslint-disable-next-line no-unused-vars
 function AppContent({
   budget,
+  budgetState,
+  commonState,
   fetchBudget,
   fetchBudgetedCategories,
   fetchAllCategories,
@@ -69,6 +71,8 @@ function AppContent({
               element={
                 <Budget
                   budget={budget}
+                  budgetState={budgetState}
+                  commonState={commonState}
                   fetchBudget={fetchBudget}
                   fetchBudgetedCategories={fetchBudgetedCategories}
                   fetchAllCategories={fetchAllCategories}
@@ -85,9 +89,10 @@ function AppContent({
 export default AppContent;
 
 AppContent.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  budget: PropTypes.any.isRequired,
+  budget: PropTypes.shape({}).isRequired,
   fetchBudget: PropTypes.func.isRequired,
   fetchBudgetedCategories: PropTypes.func.isRequired,
   fetchAllCategories: PropTypes.func.isRequired,
+  budgetState: PropTypes.shape({}).isRequired,
+  commonState: PropTypes.shape({}).isRequired,
 };

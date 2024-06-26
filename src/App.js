@@ -17,6 +17,8 @@ const mapStateToProps = (state) => ({
   budget: state.budget.budget,
   budgetedCategories: state.budget.budgetedCategories,
   allCategories: state.common.allCategories,
+  commonState: state.common.loadingState,
+  budgetState: state.budget.loadingState,
 });
 
 const mapDispatchToProps = {
