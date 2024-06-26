@@ -10,7 +10,12 @@ import { Budget } from 'pages';
 import { GlobalStyles } from 'index.css.js';
 
 // eslint-disable-next-line no-unused-vars
-function AppContent({ budget, fetchBudget, fetchBudgetedCategories }) {
+function AppContent({
+  budget,
+  fetchBudget,
+  fetchBudgetedCategories,
+  fetchAllCategories,
+}) {
   const { t, i18n } = useTranslation();
 
   const changeLanguage = (lng) => {
@@ -63,8 +68,10 @@ function AppContent({ budget, fetchBudget, fetchBudgetedCategories }) {
               path="/budget"
               element={
                 <Budget
+                  budget={budget}
                   fetchBudget={fetchBudget}
                   fetchBudgetedCategories={fetchBudgetedCategories}
+                  fetchAllCategories={fetchAllCategories}
                 />
               }
             />
@@ -82,4 +89,5 @@ AppContent.propTypes = {
   budget: PropTypes.any.isRequired,
   fetchBudget: PropTypes.func.isRequired,
   fetchBudgetedCategories: PropTypes.func.isRequired,
+  fetchAllCategories: PropTypes.func.isRequired,
 };

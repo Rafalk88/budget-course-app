@@ -10,16 +10,19 @@ import {
   fetchBudget,
   fetchBudgetedCategories,
 } from 'data/actions/budget.actions';
+import { fetchAllCategories } from 'data/actions/common.actions';
 import AppContent from './AppContent';
 
 const mapStateToProps = (state) => ({
   budget: state.budget.budget,
   budgetedCategories: state.budget.budgetedCategories,
+  allCategories: state.common.allCategories,
 });
 
 const mapDispatchToProps = {
   fetchBudget,
   fetchBudgetedCategories,
+  fetchAllCategories,
 };
 
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(AppContent);
