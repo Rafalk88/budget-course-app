@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { Button, Navigation, Wrapper } from 'components';
+import { Budget } from 'pages';
 
 import { GlobalStyles } from 'index.css.js';
 
@@ -68,7 +69,7 @@ function AppContent({ budget, fetchBudget, fetchBudgetedCategories }) {
         <Wrapper>
           <Routes>
             <Route exact path="/" element="Homepage" />
-            <Route path="/budget" element="Budget page" />
+            <Route path="/budget" element={<Budget />} />
           </Routes>
         </Wrapper>
       </Router>
