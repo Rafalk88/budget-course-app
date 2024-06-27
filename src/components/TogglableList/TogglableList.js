@@ -35,5 +35,5 @@ Item.propTypes = {
 };
 
 TogglableList.propTypes = {
-  items: PropTypes.shape({}).isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
 };

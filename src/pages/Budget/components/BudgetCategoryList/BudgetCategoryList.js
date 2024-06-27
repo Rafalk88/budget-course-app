@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
@@ -8,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import { TogglableList } from 'components';
 import { ParentCategory } from './ParentCategory';
+import { CategoryItem } from './CategoryItem';
 
 function Component({ budgetedCategories, allCategories }) {
   const groupByFn = (item) =>
@@ -18,9 +18,18 @@ function Component({ budgetedCategories, allCategories }) {
     ([parentName, categories]) => ({
       id: parentName,
       Trigger: ({ onClick }) => (
-        <ParentCategory name={parentName} onClick={onClick} />
+        <ParentCategory
+          key={parentName}
+          name={parentName}
+          onClick={() => onClick(parentName)}
+        />
       ),
-      // children: categories.map((category) => ()),
+      children: categories.map((budgetedCategory) => {
+        const { name } = allCategories.find(
+          (category) => category.id === budgetedCategory.categoryId,
+        );
+        return <CategoryItem key={budgetedCategory.id} name={name} />;
+      }),
     }),
   );
 
@@ -39,6 +48,6 @@ const mapStateToProps = (state) => ({
 export const BudgetCategoryList = connect(mapStateToProps)(Component);
 
 Component.propTypes = {
-  budgetedCategories: PropTypes.shape([]).isRequired,
-  allCategories: PropTypes.shape([]).isRequired,
+  budgetedCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
+  allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
 };

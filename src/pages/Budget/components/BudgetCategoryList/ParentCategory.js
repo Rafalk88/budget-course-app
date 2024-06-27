@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ParentCategory as Root } from './BudgetCategoryList.css';
 
 export function ParentCategory({ name, onClick }) {
-  return <Root onCLick={onClick}>{name}</Root>;
+  return <Root onClick={onClick}>{name}</Root>;
 }
 
 ParentCategory.propTypes = {

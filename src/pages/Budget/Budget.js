@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
@@ -30,7 +31,6 @@ export function Budget({
       fetchBudget(1);
       fetchBudgetedCategories(1);
       fetchAllCategories();
-      console.log(budget);
     } else {
       firstRender.current = true;
     }
