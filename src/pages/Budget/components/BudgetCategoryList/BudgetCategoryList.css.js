@@ -21,6 +21,6 @@ export const CategoryItem = styled(Category)`
 
 export const CategoryAmount = styled.span`
   font-weight: 700;
-  color: ${({ theme: { colors }, negative }) =>
-    negative ? colors.red.normal : colors.green.normal};
+  color: ${({ theme: { colors }, $negative }) =>
+    $negative ? colors.red.normal : colors.green.normal};
 `;
