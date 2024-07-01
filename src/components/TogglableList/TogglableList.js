@@ -3,16 +3,24 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 function Item({ item, onClickHandler, isActive }) {
+  const handleClick = () => {
+    if (isActive) {
+      onClickHandler(null);
+    } else {
+      onClickHandler(item.id);
+    }
+  };
+
   return (
     <div>
-      <item.Trigger onClick={onClickHandler} />
+      <item.Trigger onClick={handleClick} />
       {isActive && item.children}
     </div>
   );
 }
 
 export function TogglableList({ items }) {
-  const [selectedItem, setSelectedItem] = useState();
+  const [selectedItem, setSelectedItem] = useState(null);
 
   return (
     <>
