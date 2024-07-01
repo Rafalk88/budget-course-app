@@ -42,7 +42,18 @@ function Component({ budgetedCategories, allCategories, budget }) {
     }),
   );
 
-  return <TogglableList items={listItems} />;
+  const totalSpent = budget.transactions.reduce(
+    (acc, transaction) => acc + transaction.amount,
+    0,
+  );
+  const restToSpent = budget.totalAmount - totalSpent;
+
+  return (
+    <div>
+      <ParentCategory name={budget.name} amount={restToSpent} />
+      <TogglableList items={listItems} />
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => ({

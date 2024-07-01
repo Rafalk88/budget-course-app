@@ -7,8 +7,16 @@ import {
   CategoryAmount,
 } from './BudgetCategoryList.css';
 
-export function ParentCategory({ name, onClick, categories, transactions }) {
+export function ParentCategory({
+  name,
+  categories,
+  transactions,
+  onClick = () => {},
+  amount = undefined,
+}) {
   const categoryLeftValue = useMemo(() => {
+    if (amount) return null;
+
     const budgeted = (() => {
       try {
         return categories.reduce((acc, category) => acc + category.budget, 0);
@@ -31,13 +39,18 @@ export function ParentCategory({ name, onClick, categories, transactions }) {
     const totalLeft = budgeted ? budgeted - spentOnParentCategory : null;
 
     return totalLeft;
-  }, [categories, transactions]);
+  }, [amount, categories, transactions]);
+
+  const amountValue = useMemo(
+    () => amount || categoryLeftValue,
+    [amount, categoryLeftValue],
+  );
 
   return (
     <Root onClick={onClick}>
       <span>{name}</span>
-      <CategoryAmount $negative={categoryLeftValue < 0}>
-        {formatCurrency(categoryLeftValue, 'pl')}
+      <CategoryAmount $negative={amountValue < 0}>
+        {formatCurrency(amountValue, 'pl')}
       </CategoryAmount>
     </Root>
   );
@@ -45,17 +58,18 @@ export function ParentCategory({ name, onClick, categories, transactions }) {
 
 ParentCategory.propTypes = {
   name: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       categoryId: PropTypes.string.isRequired,
       budget: PropTypes.number.isRequired,
     }),
-  ).isRequired,
+  ),
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
       categoryId: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired,
     }),
-  ).isRequired,
+  ),
+  amount: PropTypes.number,
 };
