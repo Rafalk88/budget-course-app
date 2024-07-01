@@ -27,6 +27,11 @@ i18n
               Budget: 'Budget',
             },
           },
+          parentCategory: {
+            April: 'April',
+            Billsandutilities: 'Bills and utilities',
+            Shopping: 'Shopping',
+          },
         },
       },
       pl: {
@@ -40,6 +45,11 @@ i18n
               Homepage: 'Strona Główna',
               Budget: 'Budżet',
             },
+          },
+          parentCategory: {
+            April: 'Kwiecień',
+            Billsandutilities: 'Rachunki i media',
+            Shopping: 'Zakupy',
           },
         },
       },
