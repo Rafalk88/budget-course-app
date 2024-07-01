@@ -49,10 +49,10 @@ function Component({ budgetedCategories, allCategories, budget }) {
   const restToSpent = budget.totalAmount - totalSpent;
 
   return (
-    <div>
+    <>
       <ParentCategory name={budget.name} amount={restToSpent} />
       <TogglableList items={listItems} />
-    </div>
+    </>
   );
 }
 
