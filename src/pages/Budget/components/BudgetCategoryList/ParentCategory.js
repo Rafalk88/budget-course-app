@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
+import { formatCurrency } from 'utils';
 import {
   ParentCategory as Root,
   CategoryAmount,
@@ -36,7 +37,7 @@ export function ParentCategory({ name, onClick, categories, transactions }) {
     <Root onClick={onClick}>
       <span>{name}</span>
       <CategoryAmount $negative={categoryLeftValue < 0}>
-        {categoryLeftValue.toFixed(2)}
+        {formatCurrency(categoryLeftValue, 'pl')}
       </CategoryAmount>
     </Root>
   );
