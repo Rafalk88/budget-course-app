@@ -10,6 +10,9 @@ import { Budget } from 'pages';
 
 import { GlobalStyles } from 'index.css.js';
 
+const PL = 'pl';
+const EN = 'en';
+
 // eslint-disable-next-line no-unused-vars
 function AppContent({
   budget,
@@ -27,23 +30,21 @@ function AppContent({
   const isActiveLng = (lng) => {
     return i18n.language === lng;
   };
-  const PL = 'pl';
-  const EN = 'en';
 
   return (
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Budget app - main</title>
-          <meta name="description" content="Strona główna aplikacji" />
+          <title>{t('appContent.metaTags.title')}</title>
+          <meta name="description" content={t('appContent.metaTags.desc')} />
         </Helmet>
       </HelmetProvider>
       <Router>
         <GlobalStyles />
         <Navigation
           items={[
-            { content: t('Homepage'), to: '/' },
-            { content: t('Budget'), to: '/budget' },
+            { content: t('appContent.nav.Homepage'), to: '/' },
+            { content: t('appContent.nav.Budget'), to: '/budget' },
           ]}
           RightElement={
             <div>

@@ -17,14 +17,30 @@ i18n
     resources: {
       en: {
         translation: {
-          Homepage: 'Homepage',
-          Budget: 'Budget',
+          appContent: {
+            metaTags: {
+              title: 'Budget app - main',
+              desc: 'Main site of an application',
+            },
+            nav: {
+              Homepage: 'Homepage',
+              Budget: 'Budget',
+            },
+          },
         },
       },
       pl: {
         translation: {
-          Homepage: 'Strona Główna',
-          Budget: 'Budżet',
+          appContent: {
+            metaTags: {
+              title: 'Budget app - strona główna',
+              desc: 'Strona główna aplikacji',
+            },
+            nav: {
+              Homepage: 'Strona Główna',
+              Budget: 'Budżet',
+            },
+          },
         },
       },
     },
