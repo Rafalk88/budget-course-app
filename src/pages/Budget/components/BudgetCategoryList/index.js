@@ -1,1 +1,1 @@
-export * from './BudgetCategoryList';
+export { BudgetCategoryList } from './BudgetCategoryList';
