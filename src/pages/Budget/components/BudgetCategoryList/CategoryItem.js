@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { formatCurrency } from 'utils';
 import { CategoryItem as Root, CategoryAmount } from './BudgetCategoryList.css';
 
 export function CategoryItem({ name, item, transactions }) {
+  const { t } = useTranslation();
   const leftValue = useMemo(() => {
     const categoryTransactions = transactions.filter(
       (transaction) => transaction.categoryId === item.id,
@@ -22,7 +24,7 @@ export function CategoryItem({ name, item, transactions }) {
 
   return (
     <Root>
-      <span>{name}</span>
+      <span>{t(`categoryItem.${name.replace(/\s/g, '')}`)}</span>
       <CategoryAmount $negative={leftValue < 0}>
         {formatCurrency(leftValue, 'pl')}
       </CategoryAmount>
