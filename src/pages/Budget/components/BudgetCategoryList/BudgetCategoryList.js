@@ -9,7 +9,7 @@ import { TogglableList } from 'components';
 import { ParentCategory } from './ParentCategory';
 import { CategoryItem } from './CategoryItem';
 
-function Component({ budgetedCategories, allCategories }) {
+function Component({ budgetedCategories, allCategories, budget }) {
   const groupByFn = (item) =>
     allCategories.find((category) => category.id === item.categoryId)
       .parentCategory.name;
@@ -21,6 +21,8 @@ function Component({ budgetedCategories, allCategories }) {
         <ParentCategory
           key={parentName}
           name={parentName}
+          categories={categories}
+          transactions={budget.transactions}
           onClick={() => onClick(parentName)}
         />
       ),
@@ -33,16 +35,13 @@ function Component({ budgetedCategories, allCategories }) {
     }),
   );
 
-  return (
-    <div>
-      <TogglableList items={listItems} />
-    </div>
-  );
+  return <TogglableList items={listItems} />;
 }
 
 const mapStateToProps = (state) => ({
   budgetedCategories: state.budget.budgetedCategories,
   allCategories: state.common.allCategories,
+  budget: state.budget.budget,
 });
 
 export const BudgetCategoryList = connect(mapStateToProps)(Component);
@@ -50,4 +49,5 @@ export const BudgetCategoryList = connect(mapStateToProps)(Component);
 Component.propTypes = {
   budgetedCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
+  budget: PropTypes.shape({}).isRequired,
 };

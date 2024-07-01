@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useRef, useMemo } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
 import { LoadingIndicator } from 'components';
@@ -37,12 +38,22 @@ export function Budget({
   }, [fetchBudget, fetchBudgetedCategories, fetchAllCategories]);
 
   return (
-    <Grid>
-      <section>
-        {isLoaded ? <BudgetCategoryList /> : <LoadingIndicator />}
-      </section>
-      <section>{isLoaded ? 'Transaction list' : <LoadingIndicator />}</section>
-    </Grid>
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Budget app - budget</title>
+          <meta name="description" content="Strona główna aplikacji" />
+        </Helmet>
+      </HelmetProvider>
+      <Grid>
+        <section>
+          {isLoaded ? <BudgetCategoryList /> : <LoadingIndicator />}
+        </section>
+        <section>
+          {isLoaded ? 'Transaction list' : <LoadingIndicator />}
+        </section>
+      </Grid>
+    </>
   );
 }
 

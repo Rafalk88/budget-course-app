@@ -18,3 +18,9 @@ export const CategoryItem = styled(Category)`
   background-color: ${({ theme: { colors } }) => colors.gray.light};
   padding-left: ${({ theme: { spacing } }) => spacing.xl}px;
 `;
+
+export const CategoryAmount = styled.span`
+  font-weight: 700;
+  color: ${({ theme: { colors }, negative }) =>
+    negative ? colors.red.normal : colors.green.normal};
+`;
