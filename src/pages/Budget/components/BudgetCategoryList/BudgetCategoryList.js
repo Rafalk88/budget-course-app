@@ -9,6 +9,7 @@ import { TogglableList } from 'components';
 import { useTranslation } from 'react-i18next';
 import { ParentCategory } from './ParentCategory';
 import { CategoryItem } from './CategoryItem';
+import { Header, Footer } from './BudgetCategoryList.css';
 
 function Component({ budgetedCategories, allCategories, budget }) {
   const { t } = useTranslation();
@@ -75,12 +76,16 @@ function Component({ budgetedCategories, allCategories, budget }) {
 
   return (
     <>
-      <ParentCategory name={budget.name} amount={restToSpent} />
+      <Header>
+        <ParentCategory name={budget.name} amount={restToSpent} />
+      </Header>
       <TogglableList items={listItems} />
-      <ParentCategory
-        name={t(`parentCategory.${'Othercategories'.replace(/\s/g, '')}`)}
-        amount={avaiableForRestCategories}
-      />
+      <Footer>
+        <ParentCategory
+          name={t(`parentCategory.${'Othercategories'.replace(/\s/g, '')}`)}
+          amount={avaiableForRestCategories}
+        />
+      </Footer>
     </>
   );
 }

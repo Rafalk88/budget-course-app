@@ -24,3 +24,11 @@ export const CategoryAmount = styled.span`
   color: ${({ theme: { colors }, $negative }) =>
     $negative ? colors.red.normal : colors.green.normal};
 `;
+
+export const Header = styled.div`
+  border-bottom: 5px solid ${({ theme: { colors } }) => colors.gray.light};
+`;
+
+export const Footer = styled.div`
+  border-top: 5px solid ${({ theme: { colors } }) => colors.gray.light};
+`;
