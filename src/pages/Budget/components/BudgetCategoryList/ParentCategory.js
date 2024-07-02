@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { formatCurrency } from 'utils';
@@ -15,7 +14,6 @@ export function ParentCategory({
   onClick = () => {},
   amount = undefined,
 }) {
-  const { t } = useTranslation();
   const categoryLeftValue = useMemo(() => {
     if (amount) return null;
 
@@ -50,7 +48,7 @@ export function ParentCategory({
 
   return (
     <Root onClick={onClick}>
-      <span>{t(`parentCategory.${name.replace(/\s/g, '')}`)}</span>
+      <span>{name}</span>
       <CategoryAmount $negative={amountValue < 0}>
         {formatCurrency(amountValue, 'pl')}
       </CategoryAmount>

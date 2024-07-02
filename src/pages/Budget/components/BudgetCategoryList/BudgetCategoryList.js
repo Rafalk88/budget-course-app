@@ -6,10 +6,12 @@ import { groupBy } from 'lodash';
 import PropTypes from 'prop-types';
 
 import { TogglableList } from 'components';
+import { useTranslation } from 'react-i18next';
 import { ParentCategory } from './ParentCategory';
 import { CategoryItem } from './CategoryItem';
 
 function Component({ budgetedCategories, allCategories, budget }) {
+  const { t } = useTranslation();
   const groupByFn = (item) =>
     allCategories.find((category) => category.id === item.categoryId)
       .parentCategory.name;
@@ -47,11 +49,38 @@ function Component({ budgetedCategories, allCategories, budget }) {
     0,
   );
   const restToSpent = budget.totalAmount - totalSpent;
+  const amountTaken = budgetedCategories.reduce((acc, budgetedCategory) => {
+    const categoryTransactions = budget.transactions.filter(
+      (transaction) => transaction.categoryId === budgetedCategory.id,
+    );
+    const categoryExpenses = categoryTransactions.reduce(
+      (accNested, transaction) => accNested + transaction.amount,
+      0,
+    );
+
+    return acc + Math.max(categoryExpenses, budgetedCategory.budget);
+  }, 0);
+  const notBudgetedTransactions = budget.transactions.filter(
+    (transaction) =>
+      !budgetedCategories.find(
+        (budgetedCategory) => budgetedCategory.id === transaction.categoryId,
+      ),
+  );
+  const notBudgetedExpenses = notBudgetedTransactions.reduce(
+    (acc, transaction) => acc + transaction.amount,
+    0,
+  );
+  const avaiableForRestCategories =
+    budget.totalAmount - amountTaken - notBudgetedExpenses;
 
   return (
     <>
       <ParentCategory name={budget.name} amount={restToSpent} />
       <TogglableList items={listItems} />
+      <ParentCategory
+        name={t(`parentCategory.${'Othercategories'.replace(/\s/g, '')}`)}
+        amount={avaiableForRestCategories}
+      />
     </>
   );
 }
