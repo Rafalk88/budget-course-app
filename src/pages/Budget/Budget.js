@@ -5,7 +5,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
 import { LoadingIndicator } from 'components';
-import { BudgetCategoryList } from './components/BudgetCategoryList';
+import { BudgetCategoryList, BudgetTransactionList } from './components';
 import { Grid } from './Budget.css';
 
 export function Budget({
@@ -50,7 +50,7 @@ export function Budget({
           {isLoaded ? <BudgetCategoryList /> : <LoadingIndicator />}
         </section>
         <section>
-          {isLoaded ? 'Transaction list' : <LoadingIndicator />}
+          {isLoaded ? <BudgetTransactionList /> : <LoadingIndicator />}
         </section>
       </Grid>
     </>
