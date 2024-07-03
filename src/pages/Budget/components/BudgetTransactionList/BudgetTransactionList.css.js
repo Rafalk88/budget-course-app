@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const List = styled.ul`
-  li + li {
+  & > li + li {
     margin-top: ${({ theme: { spacing } }) => spacing.xs}px;
   }
 `;
@@ -11,17 +11,22 @@ export const ListItem = styled.li`
   padding: ${({ theme: { spacing } }) => spacing.xs}px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
-  & > *nth-child(1) {
+  & > ul {
+    width: 100%;
+  }
+
+  & > *:nth-child(1) {
     flex: 4;
   }
-  & > *nth-child(2) {
+  & > *:nth-child(2) {
     flex: 2;
   }
-  & > *nth-child(3) {
+  & > *:nth-child(3) {
     flex: 3;
   }
-  & > *nth-child(4) {
+  & > *:nth-child(4) {
     flex: 1;
   }
 `;

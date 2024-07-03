@@ -23,3 +23,9 @@ export const formatCurrency = (value, lng = 'eng') => {
     currency,
   }).format(number);
 };
+
+export const formatDate = (string, lng = 'en-GB') => {
+  const date = new Date(string);
+
+  return new Intl.DateTimeFormat(lng).format(date);
+};
