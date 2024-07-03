@@ -5,14 +5,23 @@ import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
 import PropTypes from 'prop-types';
 
+import { selectParentCategory as selectParentCategoryAction } from 'data/actions/budget.actions';
 import { TogglableList } from 'components';
 import { useTranslation } from 'react-i18next';
 import { ParentCategory } from './ParentCategory';
 import { CategoryItem } from './CategoryItem';
 import { Header, Footer } from './BudgetCategoryList.css';
 
-function Component({ budgetedCategories, allCategories, budget }) {
+function Component({
+  budgetedCategories,
+  allCategories,
+  budget,
+  selectParentCategory,
+}) {
   const { t } = useTranslation();
+  const handleCleatParentCategorySelect = () => {
+    selectParentCategory(undefined);
+  };
   const groupByFn = (item) =>
     allCategories.find((category) => category.id === item.categoryId)
       .parentCategory.name;
@@ -79,7 +88,11 @@ function Component({ budgetedCategories, allCategories, budget }) {
   return (
     <>
       <Header>
-        <ParentCategory name={budget.name} amount={restToSpent} />
+        <ParentCategory
+          name={budget.name}
+          amount={restToSpent}
+          onClick={handleCleatParentCategorySelect}
+        />
       </Header>
       <TogglableList items={listItems} />
       <Footer>
@@ -98,10 +111,18 @@ const mapStateToProps = (state) => ({
   budget: state.budget.budget,
 });
 
-export const BudgetCategoryList = connect(mapStateToProps)(Component);
+const mapDispatchToProps = {
+  selectParentCategory: selectParentCategoryAction,
+};
+
+export const BudgetCategoryList = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Component);
 
 Component.propTypes = {
   budgetedCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   budget: PropTypes.shape({}).isRequired,
+  selectParentCategory: PropTypes.func.isRequired,
 };
