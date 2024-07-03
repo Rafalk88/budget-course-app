@@ -6,12 +6,14 @@ import {
   BUDGETED_CATEGORIES_GET_REQUEST,
   BUDGETED_CATEGORIES_GET_SUCCESS,
   BUDGETED_CATEGORIES_GET_FAILURE,
+  SET_SELECTED_PARENT_CATEGORY_ID,
 } from 'data/constants';
 
 const initialState = {
   loadingState: null,
   budget: {},
   budgetedCategories: [],
+  selectedParentCategoryId: '',
 };
 
 // redux boilerplate - do not move state to last
@@ -68,6 +70,12 @@ export function budget(state = initialState, action) {
         ...state,
         budgetedCategories: [],
         loadingState: newLoadingState,
+      };
+
+    case SET_SELECTED_PARENT_CATEGORY_ID:
+      return {
+        ...state,
+        selectedParentCategoryId: action.payload,
       };
 
     default:

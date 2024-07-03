@@ -26,7 +26,9 @@ function Component({ budgetedCategories, allCategories, budget }) {
           name={parentName}
           categories={categories}
           transactions={budget.transactions}
-          onClick={() => onClick(parentName)}
+          onClick={() => {
+            onClick(parentName);
+          }}
         />
       ),
       children: categories.map((budgetedCategory) => {
