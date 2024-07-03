@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Item } from './Item';
 
-export function TogglableList({ items }) {
+export function TogglableList({ items, clickRef }) {
   const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    clickRef.current = setSelectedItem;
+  }, [clickRef, setSelectedItem]);
 
   return (
     <>
@@ -22,4 +27,5 @@ export function TogglableList({ items }) {
 
 TogglableList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
+  clickRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 };

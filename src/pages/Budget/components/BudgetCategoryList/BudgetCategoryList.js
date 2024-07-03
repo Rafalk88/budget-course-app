@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
 import PropTypes from 'prop-types';
@@ -19,11 +19,14 @@ function Component({
   selectParentCategory,
 }) {
   const { t } = useTranslation();
+  const handleClickParentCategoryRef = useRef(null);
   const handleCleatParentCategorySelect = () => {
     selectParentCategory(undefined);
+    handleClickParentCategoryRef.current(null);
   };
   const handleRestParentCategorySelect = () => {
     selectParentCategory(null);
+    handleClickParentCategoryRef.current(null);
   };
   const groupByFn = (item) =>
     allCategories.find((category) => category.id === item.categoryId)
@@ -97,7 +100,10 @@ function Component({
           onClick={handleCleatParentCategorySelect}
         />
       </Header>
-      <TogglableList items={listItems} />
+      <TogglableList
+        items={listItems}
+        clickRef={handleClickParentCategoryRef}
+      />
       <Footer>
         <ParentCategory
           name={t(`parentCategory.${'Othercategories'.replace(/\s/g, '')}`)}
