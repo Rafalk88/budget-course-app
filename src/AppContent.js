@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -23,13 +23,18 @@ function AppContent({
   fetchAllCategories,
 }) {
   const { t, i18n } = useTranslation();
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
-  const isActiveLng = (lng) => {
-    return i18n.language === lng;
-  };
+  const changeLanguage = useCallback(
+    (lng) => {
+      i18n.changeLanguage(lng);
+    },
+    [i18n],
+  );
+  const isActiveLng = useCallback(
+    (lng) => {
+      return i18n.language === lng;
+    },
+    [i18n],
+  );
 
   return (
     <>

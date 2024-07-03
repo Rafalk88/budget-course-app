@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { selectParentCategory as selectParentCategoryAction } from 'data/actions/budget.actions';
 
 function Component({ item, onClickHandler, isActive, selectParentCategory }) {
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (isActive) {
       onClickHandler(null);
       selectParentCategory(undefined);
@@ -14,7 +14,7 @@ function Component({ item, onClickHandler, isActive, selectParentCategory }) {
       onClickHandler(item.id);
       selectParentCategory(item.id);
     }
-  };
+  }, [isActive, onClickHandler, selectParentCategory]);
 
   return (
     <div>
