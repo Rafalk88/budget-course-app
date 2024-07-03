@@ -9,7 +9,7 @@ function Component({ item, onClickHandler, isActive, selectParentCategory }) {
   const handleClick = () => {
     if (isActive) {
       onClickHandler(null);
-      selectParentCategory(null);
+      selectParentCategory(undefined);
     } else {
       onClickHandler(item.id);
       selectParentCategory(item.id);

@@ -7,9 +7,29 @@ import PropTypes from 'prop-types';
 import { formatCurrency, formatDate } from 'utils';
 import { List, ListItem } from './BudgetTransactionList.css';
 
-function Component({ transactions, allCategories }) {
-  const groupedTransactionsByDate = groupBy(transactions, (transaction) =>
-    new Date(transaction.date).getUTCDate(),
+function Component({ transactions, allCategories, selectedParentCategoryId }) {
+  const filteredTransactionsBySelectedParentCategory = (() => {
+    return transactions.filter((transaction) => {
+      if (typeof selectedParentCategoryId === 'undefined') {
+        return transactions;
+      }
+
+      try {
+        const searchedCategory = allCategories.find(
+          (category) => category.id === transaction.categoryId,
+        );
+        const parentCategoryName = searchedCategory.parentCategory.name;
+
+        return parentCategoryName === selectedParentCategoryId;
+      } catch (error) {
+        return false;
+      }
+    });
+  })();
+
+  const groupedTransactionsByDate = groupBy(
+    filteredTransactionsBySelectedParentCategory,
+    (transaction) => new Date(transaction.date).getUTCDate(),
   );
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
@@ -46,6 +66,7 @@ function Component({ transactions, allCategories }) {
 
 const mapStateToProps = (state) => ({
   transactions: state.budget.budget.transactions,
+  selectedParentCategoryId: state.budget.selectedParentCategoryId,
   allCategories: state.common.allCategories,
 });
 
@@ -63,4 +84,5 @@ Component.propTypes = {
     }),
   ).isRequired,
   allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
+  selectedParentCategoryId: PropTypes.string,
 };

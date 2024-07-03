@@ -13,7 +13,7 @@ const initialState = {
   loadingState: null,
   budget: {},
   budgetedCategories: [],
-  selectedParentCategoryId: '',
+  selectedParentCategoryId: undefined,
 };
 
 // redux boilerplate - do not move state to last
