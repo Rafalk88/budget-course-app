@@ -7,13 +7,29 @@ import PropTypes from 'prop-types';
 import { formatCurrency, formatDate } from 'utils';
 import { List, ListItem } from './BudgetTransactionList.css';
 
-function Component({ transactions, allCategories, selectedParentCategoryId }) {
+function Component({
+  transactions,
+  budgetedCategories,
+  allCategories,
+  selectedParentCategoryId,
+}) {
   const filteredTransactionsBySelectedParentCategory = (() => {
-    return transactions.filter((transaction) => {
-      if (typeof selectedParentCategoryId === 'undefined') {
-        return transactions;
-      }
+    if (typeof selectedParentCategoryId === 'undefined') {
+      return transactions;
+    }
 
+    if (selectedParentCategoryId === null) {
+      return transactions.filter((innerTransaction) => {
+        const hasBudgetCategory = budgetedCategories.some(
+          (budgetedCategory) =>
+            budgetedCategory.categoryId === innerTransaction.categoryId,
+        );
+
+        return !hasBudgetCategory;
+      });
+    }
+
+    return transactions.filter((transaction) => {
       try {
         const searchedCategory = allCategories.find(
           (category) => category.id === transaction.categoryId,
@@ -66,6 +82,7 @@ function Component({ transactions, allCategories, selectedParentCategoryId }) {
 
 const mapStateToProps = (state) => ({
   transactions: state.budget.budget.transactions,
+  budgetedCategories: state.budget.budgetedCategories,
   selectedParentCategoryId: state.budget.selectedParentCategoryId,
   allCategories: state.common.allCategories,
 });
@@ -83,6 +100,7 @@ Component.propTypes = {
       budgetId: PropTypes.string,
     }),
   ).isRequired,
+  budgetedCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   selectedParentCategoryId: PropTypes.string,
 };

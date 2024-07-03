@@ -22,6 +22,9 @@ function Component({
   const handleCleatParentCategorySelect = () => {
     selectParentCategory(undefined);
   };
+  const handleRestParentCategorySelect = () => {
+    selectParentCategory(null);
+  };
   const groupByFn = (item) =>
     allCategories.find((category) => category.id === item.categoryId)
       .parentCategory.name;
@@ -99,6 +102,7 @@ function Component({
         <ParentCategory
           name={t(`parentCategory.${'Othercategories'.replace(/\s/g, '')}`)}
           amount={avaiableForRestCategories}
+          onClick={handleRestParentCategorySelect}
         />
       </Footer>
     </>
