@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,9 @@ function Component({
   allCategories,
   selectedParentCategoryId,
 }) {
-  const filteredTransactionsBySelectedParentCategory = (() => {
+  const { i18n } = useTranslation();
+  const currentLanguage = useCallback(i18n.language, [i18n.language]);
+  const filteredTransactionsBySelectedParentCategory = useMemo(() => {
     if (typeof selectedParentCategoryId === 'undefined') {
       return transactions;
     }
@@ -41,14 +43,19 @@ function Component({
         return false;
       }
     });
-  })();
-
-  const groupedTransactionsByDate = groupBy(
-    filteredTransactionsBySelectedParentCategory,
-    (transaction) => new Date(transaction.date).getUTCDate(),
+  }, [
+    allCategories,
+    budgetedCategories,
+    selectedParentCategoryId,
+    transactions,
+  ]);
+  const groupedTransactionsByDate = useMemo(
+    () =>
+      groupBy(filteredTransactionsBySelectedParentCategory, (transaction) =>
+        new Date(transaction.date).getUTCDate(),
+      ),
+    [filteredTransactionsBySelectedParentCategory],
   );
-  const { i18n } = useTranslation();
-  const currentLanguage = i18n.language;
 
   return (
     <List>
