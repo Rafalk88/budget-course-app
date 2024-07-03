@@ -6,19 +6,15 @@ export const GlobalStyles = createGlobalStyle`
   ul {
     list-style: none;
     padding: 0;
-    li + li {
-      margin-left: ${({ theme }) => theme.spacing.xs}px;
-      
-      }
-    }
+    margin: 0;
+  }
 
-    a {
-      text-decoration: none;
-      font-family: Verdana;
+  a {
+    text-decoration: none;
+    font-family: Verdana;
 
-      &:visited {
-      color: blue;
-      text-decoration: underline;
-    }
+    &:visited {
+    color: blue;
+    text-decoration: underline;
   }
 `;
