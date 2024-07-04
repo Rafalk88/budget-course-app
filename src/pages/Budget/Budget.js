@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
-import { LoadingIndicator, Modal } from 'components';
+import { LoadingIndicator, Modal, Button } from 'components';
 import { BudgetCategoryList, BudgetTransactionList } from './components';
 import { Grid } from './Budget.css';
 
@@ -51,7 +51,16 @@ export function Budget({
           {isLoaded ? <BudgetCategoryList /> : <LoadingIndicator />}
         </section>
         <section>
-          {isLoaded ? <BudgetTransactionList /> : <LoadingIndicator />}
+          {isLoaded ? (
+            <>
+              <Button to="transactions/new" variant="regular">
+                Add new transaction
+              </Button>
+              <BudgetTransactionList />
+            </>
+          ) : (
+            <LoadingIndicator />
+          )}
         </section>
       </Grid>
       <Routes>
