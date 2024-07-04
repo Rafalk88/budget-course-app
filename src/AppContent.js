@@ -74,7 +74,7 @@ function AppContent({
           <Routes>
             <Route exact path="/" element="Homepage" />
             <Route
-              path="/budget"
+              path="/budget/*"
               element={
                 <Budget
                   budget={budget}

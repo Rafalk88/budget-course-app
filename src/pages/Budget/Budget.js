@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useRef, useMemo } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
@@ -46,7 +47,6 @@ export function Budget({
         </Helmet>
       </HelmetProvider>
       <Grid>
-        <Modal />
         <section>
           {isLoaded ? <BudgetCategoryList /> : <LoadingIndicator />}
         </section>
@@ -54,6 +54,9 @@ export function Budget({
           {isLoaded ? <BudgetTransactionList /> : <LoadingIndicator />}
         </section>
       </Grid>
+      <Routes>
+        <Route path="transactions/new" element={<Modal />} />
+      </Routes>
     </>
   );
 }
