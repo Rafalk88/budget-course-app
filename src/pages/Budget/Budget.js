@@ -6,7 +6,11 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
 import { LoadingIndicator, Modal, Button } from 'components';
-import { BudgetCategoryList, BudgetTransactionList } from './components';
+import {
+  BudgetCategoryList,
+  BudgetTransactionList,
+  AddTransactionForm,
+} from './components';
 import { Grid } from './Budget.css';
 
 export function Budget({
@@ -64,7 +68,14 @@ export function Budget({
         </section>
       </Grid>
       <Routes>
-        <Route path="transactions/new" element={<Modal />} />
+        <Route
+          path="transactions/new"
+          element={
+            <Modal>
+              <AddTransactionForm />
+            </Modal>
+          }
+        />
       </Routes>
     </>
   );
