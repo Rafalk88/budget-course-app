@@ -9,9 +9,9 @@ export function Modal({ children }) {
   const navigate = useNavigate();
 
   const Component = (
-    <Wrapper onClick={() => navigate('/budget')}>
+    <Wrapper onClick={() => navigate(-1)}>
       <Content onClick={(e) => e.stopPropagation()}>
-        <CloseIcon onClick={() => navigate('/budget')}>&times;</CloseIcon>
+        <CloseIcon onClick={() => navigate(-1)}>&times;</CloseIcon>
         {children}
       </Content>
     </Wrapper>
