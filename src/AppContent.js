@@ -15,9 +15,6 @@ const EN = 'en';
 
 // eslint-disable-next-line no-unused-vars
 function AppContent({
-  budget,
-  budgetState,
-  commonState,
   fetchBudget,
   fetchBudgetedCategories,
   fetchAllCategories,
@@ -77,9 +74,6 @@ function AppContent({
               path="/budget/*"
               element={
                 <Budget
-                  budget={budget}
-                  budgetState={budgetState}
-                  commonState={commonState}
                   fetchBudget={fetchBudget}
                   fetchBudgetedCategories={fetchBudgetedCategories}
                   fetchAllCategories={fetchAllCategories}
@@ -96,10 +90,7 @@ function AppContent({
 export default AppContent;
 
 AppContent.propTypes = {
-  budget: PropTypes.shape({}).isRequired,
   fetchBudget: PropTypes.func.isRequired,
   fetchBudgetedCategories: PropTypes.func.isRequired,
   fetchAllCategories: PropTypes.func.isRequired,
-  budgetState: PropTypes.shape({}),
-  commonState: PropTypes.shape({}),
 };

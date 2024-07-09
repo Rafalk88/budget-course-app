@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useRef, useMemo } from 'react';
+import { connect } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
@@ -13,8 +14,8 @@ import {
 } from './components';
 import { Grid } from './Budget.css';
 
-export function Budget({
-  budget,
+function Component({
+  allCategories,
   budgetState,
   commonState,
   fetchBudget,
@@ -72,7 +73,7 @@ export function Budget({
           path="transactions/new"
           element={
             <Modal>
-              <AddTransactionForm />
+              <AddTransactionForm allCategories={allCategories} />
             </Modal>
           }
         />
@@ -81,8 +82,16 @@ export function Budget({
   );
 }
 
-Budget.propTypes = {
-  budget: PropTypes.shape({}).isRequired,
+const mapStateToProps = (state) => ({
+  allCategories: state.common.allCategories,
+  commonState: state.common.loadingState,
+  budgetState: state.budget.loadingState,
+});
+
+export const Budget = connect(mapStateToProps)(Component);
+
+Component.propTypes = {
+  allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   fetchBudget: PropTypes.func.isRequired,
   fetchBudgetedCategories: PropTypes.func.isRequired,
   fetchAllCategories: PropTypes.func.isRequired,
