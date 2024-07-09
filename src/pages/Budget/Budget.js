@@ -2,7 +2,7 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useRef, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
@@ -26,6 +26,7 @@ function Component({
   dispatchAddTransaction,
 }) {
   const firstRender = useRef(false);
+  const navigate = useNavigate();
 
   const isLoaded = useMemo(
     () =>
@@ -43,7 +44,7 @@ function Component({
       budgetId: budget.id,
     };
 
-    dispatchAddTransaction(valuesWithDate);
+    dispatchAddTransaction(valuesWithDate).then(() => navigate(-1));
   };
 
   useEffect(() => {
