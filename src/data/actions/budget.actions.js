@@ -24,12 +24,13 @@ export const fetchBudgetedCategories = (id) => {
   };
 };
 
-export const addTransaction = (data) => {
+export const addTransaction = ({ data, successMessage }) => {
   const promise = API.addTransaction(data);
 
   return {
     type: BUDGET_TRANSACTION_ADD,
     promise,
+    successMessage,
   };
 };
 

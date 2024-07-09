@@ -272,6 +272,30 @@
       "categoryId": "3",
       "date": "2024-07-09T22:57:27.161Z",
       "budgetId": "1"
+    },
+    {
+      "id": "7a61",
+      "description": "fgnfgngnf",
+      "amount": 0.07,
+      "categoryId": "3",
+      "date": "2024-07-09T23:30:02.004Z",
+      "budgetId": "1"
+    },
+    {
+      "id": "e0b1",
+      "description": "gregergergerg",
+      "amount": 0.07,
+      "categoryId": "2",
+      "date": "2024-07-09T23:30:43.827Z",
+      "budgetId": "1"
+    },
+    {
+      "id": "e468",
+      "description": "1111111",
+      "amount": 0.01,
+      "categoryId": "2",
+      "date": "2024-07-09T23:31:19.383Z",
+      "budgetId": "1"
     }
   ]
 }

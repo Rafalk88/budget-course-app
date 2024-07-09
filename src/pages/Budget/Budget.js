@@ -44,7 +44,10 @@ function Component({
       budgetId: budget.id,
     };
 
-    dispatchAddTransaction(valuesWithDate).then(() => navigate(-1));
+    dispatchAddTransaction({
+      data: valuesWithDate,
+      successMessage: 'Transaction has been added!',
+    }).then(() => navigate(-1));
   };
 
   useEffect(() => {
