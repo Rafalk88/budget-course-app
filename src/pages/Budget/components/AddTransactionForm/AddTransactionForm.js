@@ -3,12 +3,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useMemo } from 'react';
 import { Form, Field } from 'react-final-form';
-import { groupBy } from 'lodash';
+import { groupBy, noop } from 'lodash';
 import PropTypes from 'prop-types';
 
 const required = (value) => (value ? undefined : 'Required');
 
-export function AddTransactionForm({ categories, groupCategoriesBy }) {
+export function AddTransactionForm({
+  categories,
+  groupCategoriesBy,
+  onSubmit = noop,
+}) {
   const groupedAllCategoriesByParentName = groupCategoriesBy
     ? groupBy(categories, groupCategoriesBy)
     : null;
@@ -42,7 +46,7 @@ export function AddTransactionForm({ categories, groupCategoriesBy }) {
 
   return (
     <Form
-      onSubmit={console.log}
+      onSubmit={onSubmit}
       render={({ handleSubmit, form, submitting, pristine }) => (
         <form onSubmit={handleSubmit}>
           <Field name="description" validate={required}>
@@ -79,7 +83,7 @@ export function AddTransactionForm({ categories, groupCategoriesBy }) {
               </div>
             )}
           </Field>
-          <Field name="category">
+          <Field name="categoryId">
             {({ input, meta }) => (
               <div>
                 <label htmlFor={input.name}>Category</label>
@@ -118,4 +122,5 @@ export function AddTransactionForm({ categories, groupCategoriesBy }) {
 AddTransactionForm.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   groupCategoriesBy: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };

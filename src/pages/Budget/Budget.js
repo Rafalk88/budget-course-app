@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
+import { addTransaction } from 'data/actions/budget.actions';
 import { LoadingIndicator, Modal, Button } from 'components';
 import {
   BudgetCategoryList,
@@ -15,12 +16,14 @@ import {
 import { Grid } from './Budget.css';
 
 function Component({
+  budget,
   allCategories,
   budgetState,
   commonState,
   fetchBudget,
   fetchBudgetedCategories,
   fetchAllCategories,
+  dispatchAddTransaction,
 }) {
   const firstRender = useRef(false);
 
@@ -32,6 +35,16 @@ function Component({
       Object.keys(commonState).length === 0,
     [budgetState, commonState],
   );
+
+  const handleSubmitAddTransaction = (values) => {
+    const valuesWithDate = {
+      ...values,
+      date: new Date(),
+      budgetId: budget.id,
+    };
+
+    dispatchAddTransaction(valuesWithDate);
+  };
 
   useEffect(() => {
     if (firstRender.current) {
@@ -76,6 +89,7 @@ function Component({
               <AddTransactionForm
                 categories={allCategories}
                 groupCategoriesBy="parentCategory.name"
+                onSubmit={handleSubmitAddTransaction}
               />
             </Modal>
           }
@@ -86,18 +100,30 @@ function Component({
 }
 
 const mapStateToProps = (state) => ({
+  budget: state.budget.budget,
   allCategories: state.common.allCategories,
   commonState: state.common.loadingState,
   budgetState: state.budget.loadingState,
 });
 
-export const Budget = connect(mapStateToProps)(Component);
+const mapDispatchToProps = {
+  dispatchAddTransaction: addTransaction,
+};
+
+export const Budget = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 Component.propTypes = {
+  budget: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    totalAmount: PropTypes.number.isRequired,
+    transactions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }).isRequired,
   allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   fetchBudget: PropTypes.func.isRequired,
   fetchBudgetedCategories: PropTypes.func.isRequired,
   fetchAllCategories: PropTypes.func.isRequired,
   budgetState: PropTypes.shape({}),
   commonState: PropTypes.shape({}),
+  dispatchAddTransaction: PropTypes.func.isRequired,
 };

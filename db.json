@@ -224,6 +224,30 @@
       "date": "2020-02-20",
       "budgetId": "1",
       "id": "jHBfyjy"
+    },
+    {
+      "id": "f712",
+      "description": "thrthrt",
+      "amount": 0.06,
+      "categoryId": "2",
+      "date": "2024-07-09T22:38:23.403Z",
+      "budgetId": "1"
+    },
+    {
+      "id": "93eb",
+      "description": "gregrrge",
+      "amount": 0.09,
+      "categoryId": "2",
+      "date": "2024-07-09T22:45:01.602Z",
+      "budgetId": "1"
+    },
+    {
+      "id": "b989",
+      "description": "tyjytjytj",
+      "amount": 0.01,
+      "categoryId": "7",
+      "date": "2024-07-09T22:50:17.518Z",
+      "budgetId": "1"
     }
   ]
 }

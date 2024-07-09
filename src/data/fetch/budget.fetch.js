@@ -13,3 +13,12 @@ export function fetchBudgetCategories(id) {
 
   return promise;
 }
+
+export function addTransaction(data) {
+  const promise = fetch(`${process.env.REACT_APP_API_URL}/transactions`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+
+  return promise;
+}
