@@ -73,7 +73,10 @@ function Component({
           path="transactions/new"
           element={
             <Modal>
-              <AddTransactionForm allCategories={allCategories} />
+              <AddTransactionForm
+                categories={allCategories}
+                groupCategoriesBy="parentCategory.name"
+              />
             </Modal>
           }
         />

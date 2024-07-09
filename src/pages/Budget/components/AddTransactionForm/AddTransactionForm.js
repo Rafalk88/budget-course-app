@@ -1,13 +1,45 @@
 /* eslint-disable no-empty-pattern */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Form, Field } from 'react-final-form';
+import { groupBy } from 'lodash';
 import PropTypes from 'prop-types';
 
 const required = (value) => (value ? undefined : 'Required');
 
-export function AddTransactionForm({ allCategories }) {
+export function AddTransactionForm({ categories, groupCategoriesBy }) {
+  const groupedAllCategoriesByParentName = groupCategoriesBy
+    ? groupBy(categories, groupCategoriesBy)
+    : null;
+  const categoryItems = useMemo(
+    () =>
+      groupedAllCategoriesByParentName
+        ? Object.entries(groupedAllCategoriesByParentName).map(
+            ([parentName, innerCategories]) => {
+              return (
+                <optgroup key={parentName} label={parentName}>
+                  {innerCategories.map((category) => {
+                    return (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    );
+                  })}
+                </optgroup>
+              );
+            },
+          )
+        : categories.map((category) => {
+            return (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            );
+          }),
+    [groupedAllCategoriesByParentName, categories],
+  );
+
   return (
     <Form
       onSubmit={console.log}
@@ -59,17 +91,7 @@ export function AddTransactionForm({ allCategories }) {
                     input.onChange(value);
                   }}
                 >
-                  <option value="">Wybierz opcję</option>
-                  {allCategories.map((category) => {
-                    return (
-                      <option
-                        key={category.id}
-                        value={category.parentCategoryId}
-                      >
-                        {category.name}
-                      </option>
-                    );
-                  })}
+                  {categoryItems}
                 </select>
                 {meta.error && meta.touched && <span>{meta.error}</span>}
               </div>
@@ -94,5 +116,6 @@ export function AddTransactionForm({ allCategories }) {
 }
 
 AddTransactionForm.propTypes = {
-  allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
+  groupCategoriesBy: PropTypes.string.isRequired,
 };
