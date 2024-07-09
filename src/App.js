@@ -2,6 +2,8 @@
 import React, { Suspense } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { LoadingIndicator } from 'components';
 import { LoadingWrapper } from 'App.css';
@@ -39,6 +41,7 @@ function App() {
           </LoadingWrapper>
         }
       >
+        <ToastContainer />
         <ConnectedApp />
       </Suspense>
     </ThemeProvider>
