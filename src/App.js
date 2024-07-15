@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-fragments */
 import React, { Suspense } from 'react';
 import { ThemeProvider } from 'styled-components';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,21 +31,24 @@ const mapDispatchToProps = {
 };
 
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(AppContent);
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Suspense
-        fallback={
-          <LoadingWrapper>
-            <LoadingIndicator />
-          </LoadingWrapper>
-        }
-      >
-        <ToastContainer />
-        <ConnectedApp />
-      </Suspense>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <Suspense
+          fallback={
+            <LoadingWrapper>
+              <LoadingIndicator />
+            </LoadingWrapper>
+          }
+        >
+          <ToastContainer />
+          <ConnectedApp />
+        </Suspense>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

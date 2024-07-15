@@ -7,7 +7,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
 import { addTransaction } from 'data/actions/budget.actions';
-import { LoadingIndicator, Modal, Button } from 'components';
+import { Modal, Button } from 'components';
 import {
   BudgetCategoryList,
   BudgetTransactionList,
@@ -52,9 +52,9 @@ function Component({
 
   useEffect(() => {
     if (firstRender.current) {
-      fetchBudget(1);
-      fetchBudgetedCategories(1);
-      fetchAllCategories();
+      // fetchBudget(1);
+      // fetchBudgetedCategories(1);
+      // fetchAllCategories();
     } else {
       firstRender.current = true;
     }
@@ -70,19 +70,13 @@ function Component({
       </HelmetProvider>
       <Grid>
         <section>
-          {isLoaded ? <BudgetCategoryList /> : <LoadingIndicator />}
+          <BudgetCategoryList />
         </section>
         <section>
-          {isLoaded ? (
-            <>
-              <Button to="transactions/new" variant="regular">
-                Add new transaction
-              </Button>
-              <BudgetTransactionList />
-            </>
-          ) : (
-            <LoadingIndicator />
-          )}
+          <Button to="transactions/new" variant="regular">
+            Add new transaction
+          </Button>
+          <BudgetTransactionList />
         </section>
       </Grid>
       <Routes>

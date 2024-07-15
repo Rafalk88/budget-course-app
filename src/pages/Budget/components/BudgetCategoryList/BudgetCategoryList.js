@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useRef, useMemo, useCallback } from 'react';
+import { useQuery } from 'react-query';
 import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
 import PropTypes from 'prop-types';
@@ -8,16 +9,24 @@ import PropTypes from 'prop-types';
 import { selectParentCategory as selectParentCategoryAction } from 'data/actions/budget.actions';
 import { TogglableList } from 'components';
 import { useTranslation } from 'react-i18next';
+import { budget as APIBudget, common as APICommon } from 'data/fetch';
 import { ParentCategory } from './ParentCategory';
 import { CategoryItem } from './CategoryItem';
 import { Header, Footer } from './BudgetCategoryList.css';
 
-function Component({
-  budgetedCategories,
-  allCategories,
-  budget,
-  selectParentCategory,
-}) {
+function Component({ selectParentCategory }) {
+  const { data: budget } = useQuery(
+    ['budget', { id: 1 }],
+    APIBudget.fetchBudget,
+  );
+  const { data: budgetedCategories } = useQuery(
+    ['budgetedCategories', { id: 1 }],
+    APIBudget.fetchBudgetCategories,
+  );
+  const { data: allCategories } = useQuery(
+    'allCategories',
+    APICommon.fetchAllCategories,
+  );
   const { t } = useTranslation();
   const handleClickParentCategoryRef = useRef(null);
   const handleCleatParentCategorySelect = useCallback(() => {
@@ -147,24 +156,12 @@ function Component({
   );
 }
 
-const mapStateToProps = (state) => ({
-  budgetedCategories: state.budget.budgetedCategories,
-  allCategories: state.common.allCategories,
-  budget: state.budget.budget,
-});
-
 const mapDispatchToProps = {
   selectParentCategory: selectParentCategoryAction,
 };
 
-export const BudgetCategoryList = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Component);
+export const BudgetCategoryList = connect(null, mapDispatchToProps)(Component);
 
 Component.propTypes = {
-  budgetedCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
-  allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
-  budget: PropTypes.shape({}).isRequired,
   selectParentCategory: PropTypes.func.isRequired,
 };

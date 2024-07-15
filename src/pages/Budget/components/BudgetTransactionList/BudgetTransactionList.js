@@ -1,27 +1,36 @@
 import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
+import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
+import { budget as APIBudget, common as APICommon } from 'data/fetch';
 import { formatCurrency, formatDate } from 'utils';
 import { List, ListItem } from './BudgetTransactionList.css';
 
-function Component({
-  transactions,
-  budgetedCategories,
-  allCategories,
-  selectedParentCategoryId,
-}) {
+function Component({ selectedParentCategoryId }) {
+  const { data: budget } = useQuery(
+    ['budget', { id: 1 }],
+    APIBudget.fetchBudget,
+  );
+  const { data: budgetedCategories } = useQuery(
+    ['budgetedCategories', { id: 1 }],
+    APIBudget.fetchBudgetCategories,
+  );
+  const { data: allCategories } = useQuery(
+    'allCategories',
+    APICommon.fetchAllCategories,
+  );
   const { i18n } = useTranslation();
   const currentLanguage = useCallback(i18n.language, [i18n.language]);
   const filteredTransactionsBySelectedParentCategory = useMemo(() => {
     if (typeof selectedParentCategoryId === 'undefined') {
-      return transactions;
+      return budget.transactions;
     }
 
     if (selectedParentCategoryId === null) {
-      return transactions.filter((innerTransaction) => {
+      return budget.transactions.filter((innerTransaction) => {
         const hasBudgetCategory = budgetedCategories.some(
           (budgetedCategory) =>
             budgetedCategory.categoryId === innerTransaction.categoryId,
@@ -31,7 +40,7 @@ function Component({
       });
     }
 
-    return transactions.filter((transaction) => {
+    return budget.transactions.filter((transaction) => {
       try {
         const searchedCategory = allCategories.find(
           (category) => category.id === transaction.categoryId,
@@ -39,7 +48,7 @@ function Component({
         const parentCategoryName = searchedCategory.parentCategory.name;
 
         return parentCategoryName === selectedParentCategoryId;
-      } catch (error) {
+      } catch (tryError) {
         return false;
       }
     });
@@ -47,7 +56,7 @@ function Component({
     allCategories,
     budgetedCategories,
     selectedParentCategoryId,
-    transactions,
+    budget.transactions,
   ]);
   const groupedTransactionsByDate = useMemo(
     () =>
@@ -88,26 +97,11 @@ function Component({
 }
 
 const mapStateToProps = (state) => ({
-  transactions: state.budget.budget.transactions,
-  budgetedCategories: state.budget.budgetedCategories,
   selectedParentCategoryId: state.budget.selectedParentCategoryId,
-  allCategories: state.common.allCategories,
 });
 
 export const BudgetTransactionList = connect(mapStateToProps)(Component);
 
 Component.propTypes = {
-  transactions: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      description: PropTypes.string,
-      amount: PropTypes.number,
-      categoryId: PropTypes.string,
-      date: PropTypes.string,
-      budgetId: PropTypes.string,
-    }),
-  ).isRequired,
-  budgetedCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
-  allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
   selectedParentCategoryId: PropTypes.string,
 };
