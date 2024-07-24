@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
-import React, { useEffect, useRef, useMemo } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -15,27 +15,8 @@ import {
 } from './components';
 import { Grid } from './Budget.css';
 
-function Component({
-  budget,
-  allCategories,
-  budgetState,
-  commonState,
-  fetchBudget,
-  fetchBudgetedCategories,
-  fetchAllCategories,
-  dispatchAddTransaction,
-}) {
-  const firstRender = useRef(false);
+function Component({ budget, allCategories, dispatchAddTransaction }) {
   const navigate = useNavigate();
-
-  const isLoaded = useMemo(
-    () =>
-      !!commonState &&
-      Object.keys(budgetState).length === 0 &&
-      !!budgetState &&
-      Object.keys(commonState).length === 0,
-    [budgetState, commonState],
-  );
 
   const handleSubmitAddTransaction = (values) => {
     const valuesWithDate = {
@@ -49,16 +30,6 @@ function Component({
       successMessage: 'Transaction has been added!',
     }).then(() => navigate(-1));
   };
-
-  useEffect(() => {
-    if (firstRender.current) {
-      // fetchBudget(1);
-      // fetchBudgetedCategories(1);
-      // fetchAllCategories();
-    } else {
-      firstRender.current = true;
-    }
-  }, [fetchBudget, fetchBudgetedCategories, fetchAllCategories]);
 
   return (
     <>
@@ -118,9 +89,6 @@ Component.propTypes = {
     transactions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
   allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
-  fetchBudget: PropTypes.func.isRequired,
-  fetchBudgetedCategories: PropTypes.func.isRequired,
-  fetchAllCategories: PropTypes.func.isRequired,
   budgetState: PropTypes.shape({}),
   commonState: PropTypes.shape({}),
   dispatchAddTransaction: PropTypes.func.isRequired,
