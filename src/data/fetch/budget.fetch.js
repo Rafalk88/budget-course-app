@@ -1,26 +1,30 @@
-export async function fetchBudget({ queryKey }) {
-  const [, { id }] = queryKey;
+export const fetchBudget = async ({ id }) => {
   const response = await fetch(
     `${process.env.REACT_APP_API_URL}/budgets/${id}/?_embed=transactions`,
   );
   const data = await response.json();
 
   return data;
-}
+};
 
-export function fetchBudgetCategories({ id }) {
-  const promise = fetch(
+export const fetchBudgetCategories = async ({ id }) => {
+  const response = await fetch(
     `${process.env.REACT_APP_API_URL}/budgetCategories?budgetId=${id}`,
   );
+  const data = await response.json();
 
-  return promise;
-}
+  return data;
+};
 
-export function addTransaction({ data }) {
-  const promise = fetch(`${process.env.REACT_APP_API_URL}/transactions`, {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
+export const addTransaction = async ({ data }) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}/transactions`,
+    {
+      method: 'POST',
+      body: JSON.stringify(data),
+    },
+  );
+  const resolve = await response.json();
 
-  return promise;
-}
+  return resolve;
+};

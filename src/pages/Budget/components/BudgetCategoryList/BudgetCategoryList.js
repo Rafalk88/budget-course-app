@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useRef, useMemo, useCallback } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
 import PropTypes from 'prop-types';
@@ -15,18 +15,18 @@ import { CategoryItem } from './CategoryItem';
 import { Header, Footer } from './BudgetCategoryList.css';
 
 function Component({ selectParentCategory }) {
-  const { data: budget } = useQuery(
-    ['budget', { id: 1 }],
-    APIBudget.fetchBudget,
-  );
-  const { data: budgetedCategories } = useQuery(
-    ['budgetedCategories', { id: 1 }],
-    APIBudget.fetchBudgetCategories,
-  );
-  const { data: allCategories } = useQuery(
-    'allCategories',
-    APICommon.fetchAllCategories,
-  );
+  const { data: budget } = useQuery({
+    queryKey: ['budget'],
+    queryFn: () => APIBudget.fetchBudget({ id: 1 }),
+  });
+  const { data: budgetedCategories } = useQuery({
+    queryKey: ['budgetedCategories'],
+    queryFn: () => APIBudget.fetchBudgetCategories({ id: 1 }),
+  });
+  const { data: allCategories } = useQuery({
+    queryKey: ['allCategories'],
+    queryFn: APICommon.fetchAllCategories,
+  });
   const { t } = useTranslation();
   const handleClickParentCategoryRef = useRef(null);
   const handleCleatParentCategorySelect = useCallback(() => {
@@ -57,7 +57,7 @@ function Component({ selectParentCategory }) {
               key={parentName}
               name={parentName}
               categories={categories}
-              transactions={budget.transactions}
+              transactions={budget?.transactions}
               onClick={() => {
                 onClick(parentName);
               }}
@@ -72,31 +72,32 @@ function Component({ selectParentCategory }) {
                 key={budgetedCategory.id}
                 name={name}
                 item={budgetedCategory}
-                transactions={budget.transactions}
+                transactions={budget?.transactions}
               />
             );
           }),
         }),
       ),
-    [budgetedCategoriesByParent, allCategories, budget.transactions],
+    [budgetedCategoriesByParent, allCategories, budget?.transactions],
   );
 
   const totalSpent = useMemo(
     () =>
-      budget.transactions.reduce(
+      budget?.transactions.reduce(
         (acc, transaction) => acc + transaction.amount,
         0,
       ),
-    [budget.transactions],
+    [budget?.transactions],
   );
   const restToSpent = useMemo(
-    () => budget.totalAmount - totalSpent,
-    [budget.totalAmount, totalSpent],
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    () => budget?.totalAmount - totalSpent,
+    [budget?.totalAmount, totalSpent],
   );
   const amountTaken = useMemo(
     () =>
-      budgetedCategories.reduce((acc, budgetedCategory) => {
-        const categoryTransactions = budget.transactions.filter(
+      budgetedCategories?.reduce((acc, budgetedCategory) => {
+        const categoryTransactions = budget?.transactions.filter(
           (transaction) => transaction.categoryId === budgetedCategory.id,
         );
         const categoryExpenses = categoryTransactions.reduce(
@@ -106,37 +107,38 @@ function Component({ selectParentCategory }) {
 
         return acc + Math.max(categoryExpenses, budgetedCategory.budget);
       }, 0),
-    [budget.transactions, budgetedCategories],
+    [budget?.transactions, budgetedCategories],
   );
   const notBudgetedTransactions = useMemo(
     () =>
-      budget.transactions.filter(
+      budget?.transactions.filter(
         (transaction) =>
           !budgetedCategories.find(
             (budgetedCategory) =>
               budgetedCategory.id === transaction.categoryId,
           ),
       ),
-    [budget.transactions, budgetedCategories],
+    [budget?.transactions, budgetedCategories],
   );
   const notBudgetedExpenses = useMemo(
     () =>
-      notBudgetedTransactions.reduce(
+      notBudgetedTransactions?.reduce(
         (acc, transaction) => acc + transaction.amount,
         0,
       ),
     [notBudgetedTransactions],
   );
   const avaiableForRestCategories = useMemo(
-    () => budget.totalAmount - amountTaken - notBudgetedExpenses,
-    [budget.totalAmount, amountTaken, notBudgetedExpenses],
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    () => budget?.totalAmount - amountTaken - notBudgetedExpenses,
+    [budget?.totalAmount, amountTaken, notBudgetedExpenses],
   );
 
   return (
     <>
       <Header>
         <ParentCategory
-          name={budget.name}
+          name={budget?.name}
           amount={restToSpent}
           onClick={handleCleatParentCategorySelect}
         />

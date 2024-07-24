@@ -25,13 +25,13 @@ export function ParentCategory({
       }
     })();
 
-    const parentCategoryTransactions = transactions.filter((transaction) =>
+    const parentCategoryTransactions = transactions?.filter((transaction) =>
       categories.find(
         (category) => category.categoryId === transaction.categoryId,
       ),
     );
 
-    const spentOnParentCategory = parentCategoryTransactions.reduce(
+    const spentOnParentCategory = parentCategoryTransactions?.reduce(
       (acc, transaction) => acc + transaction.amount,
       0,
     );
@@ -57,7 +57,7 @@ export function ParentCategory({
 }
 
 ParentCategory.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   onClick: PropTypes.func,
   categories: PropTypes.arrayOf(
     PropTypes.shape({

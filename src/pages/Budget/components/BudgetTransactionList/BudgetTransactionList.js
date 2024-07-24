@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -10,27 +10,27 @@ import { formatCurrency, formatDate } from 'utils';
 import { List, ListItem } from './BudgetTransactionList.css';
 
 function Component({ selectedParentCategoryId }) {
-  const { data: budget } = useQuery(
-    ['budget', { id: 1 }],
-    APIBudget.fetchBudget,
-  );
-  const { data: budgetedCategories } = useQuery(
-    ['budgetedCategories', { id: 1 }],
-    APIBudget.fetchBudgetCategories,
-  );
-  const { data: allCategories } = useQuery(
-    'allCategories',
-    APICommon.fetchAllCategories,
-  );
+  const { data: budget } = useQuery({
+    queryKey: ['budget'],
+    queryFn: () => APIBudget.fetchBudget({ id: 1 }),
+  });
+  const { data: budgetedCategories } = useQuery({
+    queryKey: ['budgetedCategories'],
+    queryFn: () => APIBudget.fetchBudgetCategories({ id: 1 }),
+  });
+  const { data: allCategories } = useQuery({
+    queryKey: ['allCategories'],
+    queryFn: APICommon.fetchAllCategories,
+  });
   const { i18n } = useTranslation();
   const currentLanguage = useCallback(i18n.language, [i18n.language]);
   const filteredTransactionsBySelectedParentCategory = useMemo(() => {
     if (typeof selectedParentCategoryId === 'undefined') {
-      return budget.transactions;
+      return budget?.transactions;
     }
 
     if (selectedParentCategoryId === null) {
-      return budget.transactions.filter((innerTransaction) => {
+      return budget?.transactions.filter((innerTransaction) => {
         const hasBudgetCategory = budgetedCategories.some(
           (budgetedCategory) =>
             budgetedCategory.categoryId === innerTransaction.categoryId,
@@ -40,7 +40,7 @@ function Component({ selectedParentCategoryId }) {
       });
     }
 
-    return budget.transactions.filter((transaction) => {
+    return budget?.transactions.filter((transaction) => {
       try {
         const searchedCategory = allCategories.find(
           (category) => category.id === transaction.categoryId,
@@ -56,7 +56,7 @@ function Component({ selectedParentCategoryId }) {
     allCategories,
     budgetedCategories,
     selectedParentCategoryId,
-    budget.transactions,
+    budget?.transactions,
   ]);
   const groupedTransactionsByDate = useMemo(
     () =>
