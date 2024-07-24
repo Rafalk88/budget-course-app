@@ -27,5 +27,5 @@ export function TogglableList({ items, clickRef }) {
 
 TogglableList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
-  clickRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  clickRef: PropTypes.shape({ current: PropTypes.instanceOf(Function) }),
 };
