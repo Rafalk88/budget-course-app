@@ -36,7 +36,7 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient} config={{ suspense: true }}>
       <ThemeProvider theme={theme}>
         <Suspense
           fallback={
