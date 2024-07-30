@@ -109,16 +109,11 @@ function Component({ selectParentCategory }) {
       }, 0),
     [budget?.transactions, budgetedCategories],
   );
-  const notBudgetedTransactions = useMemo(
-    () =>
-      budget?.transactions.filter(
-        (transaction) =>
-          !budgetedCategories.find(
-            (budgetedCategory) =>
-              budgetedCategory.id === transaction.categoryId,
-          ),
+  const notBudgetedTransactions = budget?.transactions.filter(
+    (transaction) =>
+      !budgetedCategories.find(
+        (budgetedCategory) => budgetedCategory.id === transaction.categoryId,
       ),
-    [budget?.transactions, budgetedCategories],
   );
   const notBudgetedExpenses = useMemo(
     () =>
