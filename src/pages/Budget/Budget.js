@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import PropTypes from 'prop-types';
 
 import { addTransaction } from 'data/actions/budget.actions';
-import { Modal, Button } from 'components';
+import { Modal, Button, LoadingIndicator } from 'components';
+import { LoadingWrapper } from 'App.css';
 import {
   BudgetCategoryList,
   BudgetTransactionList,
@@ -41,13 +42,29 @@ function Component({ budget, allCategories, dispatchAddTransaction }) {
       </HelmetProvider>
       <Grid>
         <section>
-          <BudgetCategoryList />
+          <Suspense
+            fallback={
+              <LoadingWrapper>
+                <LoadingIndicator />
+              </LoadingWrapper>
+            }
+          >
+            <BudgetCategoryList />
+          </Suspense>
         </section>
         <section>
-          <Button to="transactions/new" variant="regular">
-            Add new transaction
-          </Button>
-          <BudgetTransactionList />
+          <Suspense
+            fallback={
+              <LoadingWrapper>
+                <LoadingIndicator />
+              </LoadingWrapper>
+            }
+          >
+            <Button to="transactions/new" variant="regular">
+              Add new transaction
+            </Button>
+            <BudgetTransactionList />
+          </Suspense>
         </section>
       </Grid>
       <Routes>
