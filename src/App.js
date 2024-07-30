@@ -32,11 +32,17 @@ const mapDispatchToProps = {
 };
 
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(AppContent);
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient} config={{ suspense: true }}>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Suspense
           fallback={
