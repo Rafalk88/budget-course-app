@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -20,18 +20,21 @@ export function Component({ dispatchAddTransaction }) {
   });
   const navigate = useNavigate();
 
-  const handleSubmitAddTransaction = (values) => {
-    const valuesWithDate = {
-      ...values,
-      date: new Date(),
-      budgetId: budget.id,
-    };
+  const handleSubmitAddTransaction = useCallback(
+    (values) => {
+      const valuesWithDate = {
+        ...values,
+        date: new Date(),
+        budgetId: budget.id,
+      };
 
-    dispatchAddTransaction({
-      data: valuesWithDate,
-      successMessage: 'Transaction has been added!',
-    }).then(() => navigate(-1));
-  };
+      dispatchAddTransaction({
+        data: valuesWithDate,
+        successMessage: 'Transaction has been added!',
+      }).then(() => navigate(-1));
+    },
+    [budget, allCategories, dispatchAddTransaction, navigate],
+  );
 
   return (
     <AddTransactionForm
