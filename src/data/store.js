@@ -3,11 +3,10 @@ import { applyMiddleware, createStore } from 'redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { promiseMiddleware, notificationsMiddleware } from 'data/middlewares';
 import rootReducer from './reducers';
 
 export default function configureStore(preloadedState) {
-  const middlewares = [promiseMiddleware, notificationsMiddleware];
+  const middlewares = [];
   const middlewareEnhancer = applyMiddleware(...middlewares);
   const enhancers = [middlewareEnhancer];
   const composeEnhancers = composeWithDevTools(...enhancers);

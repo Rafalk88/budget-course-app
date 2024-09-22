@@ -3,7 +3,6 @@ import React, { useCallback } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 
 import { Button, Navigation, Wrapper } from 'components';
 import { Budget } from 'pages';
@@ -14,11 +13,7 @@ const PL = 'pl';
 const EN = 'en';
 
 // eslint-disable-next-line no-unused-vars
-function AppContent({
-  fetchBudget,
-  fetchBudgetedCategories,
-  fetchAllCategories,
-}) {
+function AppContent() {
   const { t, i18n } = useTranslation();
   const changeLanguage = useCallback(
     (lng) => {
@@ -70,16 +65,7 @@ function AppContent({
         <Wrapper>
           <Routes>
             <Route exact path="/" element="Homepage" />
-            <Route
-              path="/budget/*"
-              element={
-                <Budget
-                  fetchBudget={fetchBudget}
-                  fetchBudgetedCategories={fetchBudgetedCategories}
-                  fetchAllCategories={fetchAllCategories}
-                />
-              }
-            />
+            <Route path="/budget/*" element={<Budget />} />
           </Routes>
         </Wrapper>
       </Router>
@@ -88,9 +74,3 @@ function AppContent({
 }
 
 export default AppContent;
-
-AppContent.propTypes = {
-  fetchBudget: PropTypes.func.isRequired,
-  fetchBudgetedCategories: PropTypes.func.isRequired,
-  fetchAllCategories: PropTypes.func.isRequired,
-};
