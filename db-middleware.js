@@ -1,4 +1,5 @@
 module.exports = (req, res, next) => {
-  res.header('X-Hello', 'World');
+  res.header('Cache-Control', 'public, max-age=31536000');
+  res.removeHeader('pragma');
   next();
 };
