@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { budget as APIBudget, common as APICommon } from 'data/fetch';
 import PropTypes from 'prop-types';
 
 import { addTransaction } from 'data/actions/budget.actions';
@@ -14,9 +16,18 @@ import {
 } from './components';
 import { Grid } from './Budget.css';
 
-function Component({ budget, allCategories, dispatchAddTransaction }) {
+function Component({ dispatchAddTransaction }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const { data: budget } = useQuery({
+    queryKey: ['budget'],
+    queryFn: () => APIBudget.fetchBudget({ id: 1 }),
+  });
+  const { data: allCategories } = useQuery({
+    queryKey: ['allCategories'],
+    queryFn: APICommon.fetchAllCategories,
+  });
 
   const handleSubmitAddTransaction = (values) => {
     const valuesWithDate = {
@@ -75,28 +86,12 @@ function Component({ budget, allCategories, dispatchAddTransaction }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  budget: state.budget.budget,
-  allCategories: state.common.allCategories,
-  commonState: state.common.loadingState,
-  budgetState: state.budget.loadingState,
-});
-
 const mapDispatchToProps = {
   dispatchAddTransaction: addTransaction,
 };
 
-export const Budget = connect(mapStateToProps, mapDispatchToProps)(Component);
+export const Budget = connect(null, mapDispatchToProps)(Component);
 
 Component.propTypes = {
-  budget: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    totalAmount: PropTypes.number.isRequired,
-    transactions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  }).isRequired,
-  allCategories: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
-  budgetState: PropTypes.shape({}),
-  commonState: PropTypes.shape({}),
   dispatchAddTransaction: PropTypes.func.isRequired,
 };
