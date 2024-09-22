@@ -4,3 +4,4 @@ export { LoadingIndicator } from './LoadingIndicator';
 export { Button } from './Button';
 export { TogglableList } from './TogglableList';
 export { Modal } from './Modal';
+export { SuspenseErrorBoundary } from './SuspenseErrorBoundary';
