@@ -21,10 +21,15 @@ i18n
             metaTags: {
               title: 'Budget app - main',
               desc: 'Main site of an application',
+              budgetTitle: 'Budget app - budget',
+              budgetDesc: 'Application budget side webpage',
             },
             nav: {
               Homepage: 'Homepage',
               Budget: 'Budget',
+            },
+            buttons: {
+              addTransaction: 'Add new transaction',
             },
           },
           parentCategory: {
@@ -42,10 +47,15 @@ i18n
             metaTags: {
               title: 'Budget app - strona główna',
               desc: 'Strona główna aplikacji',
+              budgetTitle: 'Budget app - budżet',
+              budgetDesc: 'Strona budżetowa aplikacji',
             },
             nav: {
               Homepage: 'Strona Główna',
               Budget: 'Budżet',
+            },
+            buttons: {
+              addTransaction: 'Dodaj nową transakcję',
             },
           },
           parentCategory: {

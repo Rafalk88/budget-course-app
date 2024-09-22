@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { addTransaction } from 'data/actions/budget.actions';
@@ -15,6 +16,7 @@ import { Grid } from './Budget.css';
 
 function Component({ budget, allCategories, dispatchAddTransaction }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmitAddTransaction = (values) => {
     const valuesWithDate = {
@@ -33,8 +35,11 @@ function Component({ budget, allCategories, dispatchAddTransaction }) {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Budget app - budget</title>
-          <meta name="description" content="Strona główna aplikacji" />
+          <title>{t('appContent.metaTags.budgetTitle')}</title>
+          <meta
+            name="description"
+            content={t('appContent.metaTags.budgetDesc')}
+          />
         </Helmet>
       </HelmetProvider>
       <Grid>
@@ -46,7 +51,7 @@ function Component({ budget, allCategories, dispatchAddTransaction }) {
         <section>
           <SuspenseErrorBoundary>
             <Button to="transactions/new" variant="regular">
-              Add new transaction
+              {t('appContent.buttons.addTransaction')}
             </Button>
             <BudgetTransactionList />
           </SuspenseErrorBoundary>
