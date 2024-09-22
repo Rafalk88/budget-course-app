@@ -1,46 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { budget as APIBudget, common as APICommon } from 'data/fetch';
-import PropTypes from 'prop-types';
 
-import { addTransaction } from 'data/actions/budget.actions';
 import { Modal, Button, SuspenseErrorBoundary } from 'components';
 import {
   BudgetCategoryList,
   BudgetTransactionList,
-  AddTransactionForm,
+  AddTransactionView,
 } from './components';
+
 import { Grid } from './Budget.css';
 
-function Component({ dispatchAddTransaction }) {
-  const navigate = useNavigate();
+export function Budget() {
   const { t } = useTranslation();
-
-  const { data: budget } = useQuery({
-    queryKey: ['budget'],
-    queryFn: () => APIBudget.fetchBudget({ id: 1 }),
-  });
-  const { data: allCategories } = useQuery({
-    queryKey: ['allCategories'],
-    queryFn: APICommon.fetchAllCategories,
-  });
-
-  const handleSubmitAddTransaction = (values) => {
-    const valuesWithDate = {
-      ...values,
-      date: new Date(),
-      budgetId: budget.id,
-    };
-
-    dispatchAddTransaction({
-      data: valuesWithDate,
-      successMessage: 'Transaction has been added!',
-    }).then(() => navigate(-1));
-  };
 
   return (
     <>
@@ -73,11 +46,7 @@ function Component({ dispatchAddTransaction }) {
           path="transactions/new"
           element={
             <Modal>
-              <AddTransactionForm
-                categories={allCategories}
-                groupCategoriesBy="parentCategory.name"
-                onSubmit={handleSubmitAddTransaction}
-              />
+              <AddTransactionView />
             </Modal>
           }
         />
@@ -85,13 +54,3 @@ function Component({ dispatchAddTransaction }) {
     </>
   );
 }
-
-const mapDispatchToProps = {
-  dispatchAddTransaction: addTransaction,
-};
-
-export const Budget = connect(null, mapDispatchToProps)(Component);
-
-Component.propTypes = {
-  dispatchAddTransaction: PropTypes.func.isRequired,
-};
