@@ -13,7 +13,7 @@
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-xhr-backend": "^3.2.2",
-    "json-server": "^1.0.0-beta.1",
+    "json-server": "^0.17.4",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
@@ -37,7 +37,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "db": "json-server --watch db.json --port 3001",
+    "db": "json-server --watch db.json --port 3001 --middlewares ./db-middleware.js",
     "format": "prettier --write 'src/**/*.{js,jsx,json,css,md}'",
     "dev": "concurrently \"npm run start\" \"npm run db\""
   },
