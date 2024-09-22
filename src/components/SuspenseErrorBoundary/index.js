@@ -1,1 +1,1 @@
-export { SuspenseErrorBoundary } from './SuspenseErrorBoundary';
+export { default as SuspenseErrorBoundary } from './SuspenseErrorBoundary';

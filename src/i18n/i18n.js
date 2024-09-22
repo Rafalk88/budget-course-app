@@ -30,6 +30,10 @@ i18n
           parentCategory: {
             Othercategories: 'Other categories',
           },
+          suspenseErrorBoundary: {
+            title: 'Something went wrong!',
+            resetBtn: 'Try again!',
+          },
         },
       },
       pl: {
@@ -46,6 +50,10 @@ i18n
           },
           parentCategory: {
             Othercategories: 'Pozostałe',
+          },
+          suspenseErrorBoundary: {
+            title: 'Coś poszło nie tak!',
+            resetBtn: 'Ponów próbę!',
           },
         },
       },
