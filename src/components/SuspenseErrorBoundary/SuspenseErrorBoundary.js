@@ -31,7 +31,7 @@ class SuspenseErrorBoundary extends React.Component {
     return (
       <Wrapper>
         <h2>{t('suspenseErrorBoundary.title')}</h2>
-        <Button variant="regular" onClick={resetErrorBoundary}>
+        <Button variant="regular" onClick={() => resetErrorBoundary()}>
           {t('suspenseErrorBoundary.resetBtn')}
         </Button>
       </Wrapper>
