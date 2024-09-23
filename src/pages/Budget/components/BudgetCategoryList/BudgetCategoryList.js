@@ -1,12 +1,10 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useRef, useMemo, useCallback } from 'react';
+import React, { useRef, useMemo, useCallback, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { connect } from 'react-redux';
 import { groupBy } from 'lodash';
 import PropTypes from 'prop-types';
 
-import { selectParentCategory as selectParentCategoryAction } from 'data/actions/budget.actions';
+import { BudgetContext } from 'data/context';
 import { TogglableList } from 'components';
 import { useTranslation } from 'react-i18next';
 import { budget as APIBudget, common as APICommon } from 'data/fetch';
@@ -14,7 +12,7 @@ import { ParentCategory } from './ParentCategory';
 import { CategoryItem } from './CategoryItem';
 import { Header, Footer } from './BudgetCategoryList.css';
 
-function Component({ selectParentCategory }) {
+export function BudgetCategoryList() {
   const { data: budget } = useQuery({
     queryKey: ['budget'],
     queryFn: () => APIBudget.fetchBudget({ id: 1 }),
@@ -27,16 +25,17 @@ function Component({ selectParentCategory }) {
     queryKey: ['allCategories'],
     queryFn: APICommon.fetchAllCategories,
   });
+  const { setSelectedParentCategoryId } = useContext(BudgetContext.store);
   const { t } = useTranslation();
   const handleClickParentCategoryRef = useRef(null);
   const handleCleatParentCategorySelect = useCallback(() => {
-    selectParentCategory(undefined);
+    setSelectedParentCategoryId(undefined);
     handleClickParentCategoryRef.current(null);
-  }, [selectParentCategory, handleClickParentCategoryRef]);
+  }, [setSelectedParentCategoryId, handleClickParentCategoryRef]);
   const handleRestParentCategorySelect = useCallback(() => {
-    selectParentCategory(null);
+    setSelectedParentCategoryId(null);
     handleClickParentCategoryRef.current(null);
-  }, [selectParentCategory, handleClickParentCategoryRef]);
+  }, [setSelectedParentCategoryId, handleClickParentCategoryRef]);
   const budgetedCategoriesByParent = useMemo(
     () =>
       groupBy(
@@ -50,33 +49,43 @@ function Component({ selectParentCategory }) {
   const listItems = useMemo(
     () =>
       Object.entries(budgetedCategoriesByParent).map(
-        ([parentName, categories]) => ({
-          id: parentName,
-          Trigger: ({ onClick }) => (
-            <ParentCategory
-              key={parentName}
-              name={parentName}
-              categories={categories}
-              transactions={budget?.transactions}
-              onClick={() => {
-                onClick(parentName);
-              }}
-            />
-          ),
-          children: categories.map((budgetedCategory) => {
-            const { name } = allCategories.find(
-              (category) => category.id === budgetedCategory.categoryId,
-            );
+        ([parentName, categories]) => {
+          function Trigger({ onClick }) {
             return (
-              <CategoryItem
-                key={budgetedCategory.id}
-                name={name}
-                item={budgetedCategory}
+              <ParentCategory
+                key={parentName}
+                name={parentName}
+                categories={categories}
                 transactions={budget?.transactions}
+                onClick={() => {
+                  onClick(parentName);
+                }}
               />
             );
-          }),
-        }),
+          }
+
+          Trigger.propTypes = {
+            onClick: PropTypes.func.isRequired,
+          };
+
+          return {
+            id: parentName,
+            Trigger,
+            children: categories.map((budgetedCategory) => {
+              const { name } = allCategories.find(
+                (category) => category.id === budgetedCategory.categoryId,
+              );
+              return (
+                <CategoryItem
+                  key={budgetedCategory.id}
+                  name={name}
+                  item={budgetedCategory}
+                  transactions={budget?.transactions}
+                />
+              );
+            }),
+          };
+        },
       ),
     [budgetedCategoriesByParent, allCategories, budget?.transactions],
   );
@@ -153,13 +162,4 @@ function Component({ selectParentCategory }) {
   );
 }
 
-const mapDispatchToProps = {
-  selectParentCategory: selectParentCategoryAction,
-};
-
-export const BudgetCategoryList = connect(null, mapDispatchToProps)(Component);
 export default BudgetCategoryList;
-
-Component.propTypes = {
-  selectParentCategory: PropTypes.func.isRequired,
-};

@@ -4,6 +4,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
 import { Modal, Button, SuspenseErrorBoundary } from 'components';
+import { BudgetContext } from 'data/context';
 
 import { Grid } from './Budget.css';
 
@@ -32,37 +33,39 @@ export function Budget() {
           />
         </Helmet>
       </HelmetProvider>
-      <Grid>
-        <section>
-          <SuspenseErrorBoundary>
-            <BudgetCategoryList />
-          </SuspenseErrorBoundary>
-        </section>
-        <section>
-          <SuspenseErrorBoundary>
-            <Button to="transactions/new" variant="regular">
-              {t('appContent.buttons.addTransaction')}
-            </Button>
-            <Button
-              onClick={() => setShowTransactions(!showTransactions)}
-              variant="regular"
-            >
-              {showTransactions ? 'Hide Transactions' : 'Show Transactions'}
-            </Button>
-            {showTransactions ? <BudgetTransactionList /> : null}
-          </SuspenseErrorBoundary>
-        </section>
-      </Grid>
-      <Routes>
-        <Route
-          path="transactions/new"
-          element={
-            <Modal>
-              <AddTransactionView />
-            </Modal>
-          }
-        />
-      </Routes>
+      <BudgetContext.BudgetProvider>
+        <Grid>
+          <section>
+            <SuspenseErrorBoundary>
+              <BudgetCategoryList />
+            </SuspenseErrorBoundary>
+          </section>
+          <section>
+            <SuspenseErrorBoundary>
+              <Button to="transactions/new" variant="regular">
+                {t('appContent.buttons.addTransaction')}
+              </Button>
+              <Button
+                onClick={() => setShowTransactions(!showTransactions)}
+                variant="regular"
+              >
+                {showTransactions ? 'Hide Transactions' : 'Show Transactions'}
+              </Button>
+              {showTransactions ? <BudgetTransactionList /> : null}
+            </SuspenseErrorBoundary>
+          </section>
+        </Grid>
+        <Routes>
+          <Route
+            path="transactions/new"
+            element={
+              <Modal>
+                <AddTransactionView />
+              </Modal>
+            }
+          />
+        </Routes>
+      </BudgetContext.BudgetProvider>
     </>
   );
 }
