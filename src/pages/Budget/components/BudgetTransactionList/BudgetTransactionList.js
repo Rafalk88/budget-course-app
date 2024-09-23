@@ -1,15 +1,14 @@
-import React, { useMemo, useCallback } from 'react';
-import { connect } from 'react-redux';
+import React, { useMemo, useCallback, useContext } from 'react';
 import { groupBy } from 'lodash';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 
+import { BudgetContext } from 'data/context';
 import { budget as APIBudget, common as APICommon } from 'data/fetch';
 import { formatCurrency, formatDate } from 'utils';
 import { List, ListItem } from './BudgetTransactionList.css';
 
-function Component({ selectedParentCategoryId }) {
+export function BudgetTransactionList() {
   const { data: budget } = useQuery({
     queryKey: ['budget'],
     queryFn: () => APIBudget.fetchBudget({ id: 1 }),
@@ -22,6 +21,7 @@ function Component({ selectedParentCategoryId }) {
     queryKey: ['allCategories'],
     queryFn: APICommon.fetchAllCategories,
   });
+  const { selectedParentCategoryId } = useContext(BudgetContext.store);
   const { i18n } = useTranslation();
   const currentLanguage = useCallback(i18n.language, [i18n.language]);
   const filteredTransactionsBySelectedParentCategory = useMemo(() => {
@@ -96,13 +96,4 @@ function Component({ selectedParentCategoryId }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  selectedParentCategoryId: state.budget.selectedParentCategoryId,
-});
-
-export const BudgetTransactionList = connect(mapStateToProps)(Component);
 export default BudgetTransactionList;
-
-Component.propTypes = {
-  selectedParentCategoryId: PropTypes.string,
-};

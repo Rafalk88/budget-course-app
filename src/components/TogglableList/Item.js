@@ -1,38 +1,29 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback } from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useContext } from 'react';
+import { BudgetContext } from 'data/context';
 import PropTypes from 'prop-types';
 
-import { selectParentCategory as selectParentCategoryAction } from 'data/actions/budget.actions';
+export const Item = React.memo(({ item, onClickHandler, isActive }) => {
+  const { setSelectedParentCategoryId } = useContext(BudgetContext.store);
+  const handleClick = useCallback(() => {
+    if (isActive) {
+      onClickHandler(null);
+      setSelectedParentCategoryId(undefined);
+    } else {
+      onClickHandler(item.id);
+      setSelectedParentCategoryId(item.id);
+    }
+  }, [isActive, onClickHandler, setSelectedParentCategoryId]);
 
-const Component = React.memo(
-  ({ item, onClickHandler, isActive, selectParentCategory }) => {
-    const handleClick = useCallback(() => {
-      if (isActive) {
-        onClickHandler(null);
-        selectParentCategory(undefined);
-      } else {
-        onClickHandler(item.id);
-        selectParentCategory(item.id);
-      }
-    }, [isActive, onClickHandler, selectParentCategory]);
+  return (
+    <div>
+      <item.Trigger onClick={handleClick} />
+      {isActive && item.children}
+    </div>
+  );
+});
 
-    return (
-      <div>
-        <item.Trigger onClick={handleClick} />
-        {isActive && item.children}
-      </div>
-    );
-  },
-);
-
-const mapDispatchToProps = {
-  selectParentCategory: selectParentCategoryAction,
-};
-
-export const Item = connect(null, mapDispatchToProps)(Component);
-
-Component.propTypes = {
+Item.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     Trigger: PropTypes.elementType.isRequired,
@@ -40,5 +31,4 @@ Component.propTypes = {
   }).isRequired,
   onClickHandler: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
-  selectParentCategory: PropTypes.func.isRequired,
 };
