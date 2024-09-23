@@ -1,7 +1,7 @@
 {
   "name": "budget",
   "author": "Rafał Kochanecki",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^5.51.3",

@@ -8,6 +8,7 @@ import { BudgetContext } from 'data/context';
 import { TogglableList } from 'components';
 import { useTranslation } from 'react-i18next';
 import { budget as APIBudget, common as APICommon } from 'data/fetch';
+import { SELECT_PARENT_CATEGORY_ID } from 'data/constants';
 import { ParentCategory } from './ParentCategory';
 import { CategoryItem } from './CategoryItem';
 import { Header, Footer } from './BudgetCategoryList.css';
@@ -25,17 +26,17 @@ export function BudgetCategoryList() {
     queryKey: ['allCategories'],
     queryFn: APICommon.fetchAllCategories,
   });
-  const { setSelectedParentCategoryId } = useContext(BudgetContext.store);
+  const { dispatch } = useContext(BudgetContext.store);
   const { t } = useTranslation();
   const handleClickParentCategoryRef = useRef(null);
   const handleCleatParentCategorySelect = useCallback(() => {
-    setSelectedParentCategoryId(undefined);
+    dispatch({ type: SELECT_PARENT_CATEGORY_ID, payload: undefined });
     handleClickParentCategoryRef.current(null);
-  }, [setSelectedParentCategoryId, handleClickParentCategoryRef]);
+  }, [dispatch, handleClickParentCategoryRef]);
   const handleRestParentCategorySelect = useCallback(() => {
-    setSelectedParentCategoryId(null);
+    dispatch({ type: SELECT_PARENT_CATEGORY_ID, payload: null });
     handleClickParentCategoryRef.current(null);
-  }, [setSelectedParentCategoryId, handleClickParentCategoryRef]);
+  }, [dispatch, handleClickParentCategoryRef]);
   const budgetedCategoriesByParent = useMemo(
     () =>
       groupBy(

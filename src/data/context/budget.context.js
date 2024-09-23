@@ -1,18 +1,33 @@
-import React, { createContext, useState } from 'react';
+/* eslint-disable consistent-return */
+import React, { createContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
+
+import { SELECT_PARENT_CATEGORY_ID } from 'data/constants';
 
 const initialValue = {};
 
 const store = createContext(initialValue);
 const { Provider } = store;
 
+function reducer(state, action) {
+  switch (action.type) {
+    case SELECT_PARENT_CATEGORY_ID:
+      return {
+        ...state,
+        selectedParentCategoryId: action.payload,
+      };
+    default:
+      break;
+  }
+}
+
 function BudgetProvider({ children }) {
-  const [selectedParentCategoryId, setSelectedParentCategoryId] = useState();
+  const [state, dispatch] = useReducer(reducer, initialValue);
   return (
     <Provider
       value={{
-        selectedParentCategoryId,
-        setSelectedParentCategoryId,
+        ...state,
+        dispatch,
       }}
     >
       {children}
