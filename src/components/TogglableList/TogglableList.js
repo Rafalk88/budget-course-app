@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Item } from './Item';
 
-export function TogglableList({ items, clickRef }) {
+function Component({ items, clickRef }) {
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
@@ -25,7 +25,13 @@ export function TogglableList({ items, clickRef }) {
   );
 }
 
-TogglableList.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape([])).isRequired,
+Component.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   clickRef: PropTypes.shape({ current: PropTypes.instanceOf(Function) }),
 };
+
+export const TogglableList = React.memo(Component);
