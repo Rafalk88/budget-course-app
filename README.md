@@ -1,16 +1,16 @@
 
-# Project Title
+# :sparkles::sparkles:Project Title:sparkles::sparkles:
 
 <div align="left">
   <img src="https://img.shields.io/badge/Udemy-A435F0?style=for-the-badge&logo=Udemy&logoColor=white" alt="Udemy" />
   <span>- create budget application.</span>
 </div>
 
-## Languages-Frameworks-Tools
+## :hammer_and_wrench:Languages-Frameworks-Tools:hammer_and_wrench:
 
 [![My Skills](https://skillicons.dev/icons?i=nextjs,redux,styledcomponents)](https://skillicons.dev)
 
-## What I learned on this course
+## :mortar_board:What I learned on this course
 
 1. Built a home budget management app with the ability to add transactions and assign them to specific budgeted categories.
 2. Technical aspects covered:  
@@ -26,12 +26,12 @@
    j. Used `JSON Server` for API interactions. 
 
 
-## Screenshots
+## :camera_flash:Screenshots
 
 ![App Screenshot](/screenshots/screen1.png)
 
 
-## Run Locally
+## :electric_plug:Run Locally
 
 Clone the project
 
