@@ -101,6 +101,7 @@ const mapStateToProps = (state) => ({
 });
 
 export const BudgetTransactionList = connect(mapStateToProps)(Component);
+export default BudgetTransactionList;
 
 Component.propTypes = {
   selectedParentCategoryId: PropTypes.string,

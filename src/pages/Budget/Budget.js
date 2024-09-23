@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
 import { Modal, Button, SuspenseErrorBoundary } from 'components';
-import {
-  BudgetCategoryList,
-  BudgetTransactionList,
-  AddTransactionView,
-} from './components';
 
 import { Grid } from './Budget.css';
 
+const BudgetTransactionList = React.lazy(
+  () => import('./components/BudgetTransactionList/BudgetTransactionList'),
+);
+const BudgetCategoryList = React.lazy(
+  () => import('./components/BudgetCategoryList/BudgetCategoryList'),
+);
+const AddTransactionView = React.lazy(
+  () => import('./components/AddTransactionForm/AddTransactionView'),
+);
+
 export function Budget() {
   const { t } = useTranslation();
+  const [showTransactions, setShowTransactions] = useState(false);
 
   return (
     <>
@@ -37,7 +43,13 @@ export function Budget() {
             <Button to="transactions/new" variant="regular">
               {t('appContent.buttons.addTransaction')}
             </Button>
-            <BudgetTransactionList />
+            <Button
+              onClick={() => setShowTransactions(!showTransactions)}
+              variant="regular"
+            >
+              {showTransactions ? 'Hide Transactions' : 'Show Transactions'}
+            </Button>
+            {showTransactions ? <BudgetTransactionList /> : null}
           </SuspenseErrorBoundary>
         </section>
       </Grid>

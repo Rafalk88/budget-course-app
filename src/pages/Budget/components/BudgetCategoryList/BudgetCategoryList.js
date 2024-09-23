@@ -158,6 +158,7 @@ const mapDispatchToProps = {
 };
 
 export const BudgetCategoryList = connect(null, mapDispatchToProps)(Component);
+export default BudgetCategoryList;
 
 Component.propTypes = {
   selectParentCategory: PropTypes.func.isRequired,

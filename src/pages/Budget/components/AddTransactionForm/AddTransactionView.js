@@ -40,3 +40,5 @@ export function AddTransactionView() {
     />
   );
 }
+
+export default AddTransactionView;
