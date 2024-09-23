@@ -16,9 +16,9 @@
 2. Technical aspects covered:  
    a. Styling components using `CSS-in-JS` with `styled-components`.  
    b. Managing application state with `Redux` and understanding how middleware works and how to create them (e.g., notify middleware with `Toastify`). 
-   c. Using `useCallback` and `useMemo` hooks to improve application performance.  
+   c. Using `useCallback` and `useMemo` hooks to improve application performance.     
    d. Built a modal (for adding transactions) using `React Portals`.  
-   e. Utilized `React Suspense` (loading indicator) and `React Lazy` for code-splitting.  
+   e. Utilized `React Suspense` (loading indicator) and `React Lazy` for code-splitting.   
    f. Used `React.memo` to reduce unnecessary component re-renders.  
    g. Integrated a form using `React Hook Form`.  
    h. Replaced `Redux` state management with `React Query`, where data is cached (added middleware to `JSON Server` for caching enforcement, currently disabled).  
