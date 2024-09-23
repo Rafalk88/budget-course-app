@@ -8,9 +8,7 @@
 
 ## Languages-Frameworks-Tools
 
-<div align="center">
-  [![My Skills](https://skillicons.dev/icons?i=nextjs,redux,styledcomponents)](https://skillicons.dev)
-</div>
+[![My Skills](https://skillicons.dev/icons?i=nextjs,redux,styledcomponents)](https://skillicons.dev)
 
 ## What I learned on this course
 
